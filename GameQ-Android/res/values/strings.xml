@@ -6,7 +6,7 @@
     <string name="title_device_list">Devices</string>
     <string name="title_device_detail">Device Detail</string>
     <string name="title_login">Sign In</string>
-    <string name="about_text">To connect your other devices to this one, download the GameQ client from GameQ.com to your other machines. Once you\'ve logged in we\'ll handle the rest to keep you notified when it\'s time to return to your computer!</string>
+    <string name="str_about_text">To connect your other devices to this one, download the GameQ client from GameQ.com to your other machines. Once you\'ve logged in we\'ll handle the rest to keep you notified when it\'s time to return to your computer!</string>
     <string name="title_activity_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="str_settings">Settings</string>
@@ -17,4 +17,9 @@
 	<string name="str_gameq.com">GameQ.com</string>
 	<string name="str_toggle_notifications_on">Toggle Push Notifications On/Off!</string>
 	<string name="dummy">dummystringRightHereLoLDrakmamman</string>
+	<string name="str_email">email</string>
+	<string name="str_password">password</string>
+	<string name="str_bolIsLoggedIn">bolIsLoggedIn</string>
+	<string name="str_bolIsRegisteredForNotifications">bolIsRegisteredForNotifications</string>
+	<string name="token">token</string>
 </resources>

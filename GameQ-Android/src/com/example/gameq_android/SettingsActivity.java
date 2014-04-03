@@ -1,15 +1,15 @@
 package com.example.gameq_android;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import java.security.MessageDigest;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
 public class SettingsActivity extends ActivityMaster {
 
@@ -52,6 +52,10 @@ public class SettingsActivity extends ActivityMaster {
 	}
 	
 	public void toggleNotifications(View view) {
+		//init DataHandlers
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor dataSetter = dataGetter.edit();
+		
 		//TODO toggles notifications on / off
 	}
 	

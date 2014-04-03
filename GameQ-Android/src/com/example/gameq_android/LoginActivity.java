@@ -1,9 +1,12 @@
 package com.example.gameq_android;
 
+import com.example.gameq_android.MainActivity.PlaceholderFragment;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,11 +57,13 @@ public class LoginActivity extends ActivityMaster{
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+		
+	
+		
+		
 
 		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-		mEmailView = (EditText) findViewById(R.id.email);
-		mEmailView.setText(mEmail);
+		
 
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView
@@ -85,6 +90,24 @@ public class LoginActivity extends ActivityMaster{
 						attemptLogin();
 					}
 				});
+		
+		// attempt login instantaneously if intent extras != null
+		Intent intent = getIntent();
+		String email = intent.getStringExtra("@string/str_email");
+		String password = intent.getStringExtra("@string/str_password");
+		if (!(email == null || password == null)) {
+			
+			mEmailView = (EditText) findViewById(R.id.email);
+			mEmailView.setText(email);
+			
+			mPasswordView = (EditText) findViewById(R.id.password);
+			mPasswordView.setText(password);
+			
+			attemptLogin();
+		} else {
+			//do nothing, one value is null
+		}
+				
 	}
 
 	@Override

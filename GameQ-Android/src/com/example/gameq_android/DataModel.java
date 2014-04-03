@@ -50,7 +50,7 @@ public class DataModel {
 		return false;
 	}
 	
-	public boolean getBolIsRegisteredForNotifications(boolean bol) {
+	public boolean getBolIsRegisteredForNotifications() {
 		//TODO
 		return false;
 	}
