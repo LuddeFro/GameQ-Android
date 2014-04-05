@@ -21,5 +21,16 @@
 	<string name="str_password">password</string>
 	<string name="str_bolIsLoggedIn">bolIsLoggedIn</string>
 	<string name="str_bolIsRegisteredForNotifications">bolIsRegisteredForNotifications</string>
-	<string name="token">token</string>
+	<string name="str_token">token</string>
+	<string name="str_fromLogin">fromLogin</string>
+	
+	<string name="str_URL">http://185.2.155.172/</string>
+	<string name="str_LoginURL">signing.php</string>
+	<string name="str_LogoutURL">logging.php</string>
+	<string name="str_UpdateDrawURL">updateDraw.php</string>
+	<string name="str_UpdateTokenURL">upAndroidToken.php</string>
+	<string name="str_RegisterURL">regging.php</string>
+	
+	<string name="salt">iuyavos32bdf83ika</string>
+	
 </resources>

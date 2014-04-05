@@ -25,27 +25,22 @@ public class MainActivity extends ActivityMaster {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
+		boolean bolIsLoggedIn = getBolIsLoggedIn();
+		String email = getEmail();
+		String password = getPassword();
 		
-		
-		
-		//init DataHandlers
-		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor dataSetter = dataGetter.edit();
-		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "aow6ešmvb83amas2", true);
-		
-		boolean bolIsLoggedIn = dataGetter.getBoolean("@string/str_bolIsLoggedIn", false);
-		String email = dataGetter.getString("@string/str_email", null);
-		String password = secureDataHandler.getString("@string/str_password");
-		
-		
-
-		
-		if (password == null || email == null || bolIsLoggedIn == false) { 
-			//not valid login, nullify data and show login screen
-			logout(null);
-		} else { // creds valid?! attemptlogin with email + password
-			showLogin(email, password);
+		Intent intent = getIntent();
+		String fromLogin = intent.getStringExtra("@string/str_fromLogin");
+		if (!(fromLogin.equals("yes"))) {
+			if (password == null || email == null || bolIsLoggedIn == false) { 
+				//not valid login, nullify data and show login screen
+				logout(null);
+			} else { // creds valid?! attemptlogin with email + password
+				showLogin(email, password);
+			}
 		}
+		
+		
 		
 	}
 

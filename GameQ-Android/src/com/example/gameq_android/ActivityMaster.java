@@ -13,34 +13,13 @@ import com.example.gameq_android.MainActivity.PlaceholderFragment;
 
 public class ActivityMaster extends ActionBarActivity {
 
-
+	private ConnectionHandler connectionsHandler;
 	
-protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		
-		
-		
-		
-		/* possible initiation of DataHandlers:
-		//init DataHandlers
-		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor dataSetter = dataGetter.edit();
-		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "aow6ešmvb83amas2", true);
-		
-		dataSetter.putString("@string/str_email", "bajs");
-		dataSetter.commit();
-		String abc = dataGetter.getString("@string/str_email", null);
-		System.out.println(abc);
-		
-		
-		
-		// Put (all puts are automatically committed)
-		secureDataHandler.put("password", "User1234Fagaloosh");
-		// Get
-		String user = secureDataHandler.getString("userIdFaggot");
-		System.out.println(user);
-		*/
+		connectionsHandler = new ConnectionHandler(this);
 		
 	}
 	
@@ -51,18 +30,14 @@ protected void onCreate(Bundle savedInstanceState) {
 	}
 	
 	public void logout(View view) {
-		//init DataHandlers
-		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor dataSetter = dataGetter.edit();
-		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "aow6ešmvb83amas2", true);
-				
-		secureDataHandler.put("password", null);
-		dataSetter.putString("@string/str_email", null);
-		dataSetter.putBoolean("str_bolIsLoggedIn", false);
-		dataSetter.putBoolean("str_bolIsRegisteredForNotifications", false);
-		dataSetter.commit();
+		connectionsHandler.postLogout();
+		
+		setPassword(null);
+		setEmail(null);
+		setBolIsLoggedIn(false);
+		setBolIsRegisteredForNotifications(false);
+		
 		//TODO unregister for push notifications
-		//TODO post logout
 		showLogin(null, null);
 	}
 	
@@ -96,6 +71,73 @@ protected void onCreate(Bundle savedInstanceState) {
 		//superfluous addition to preventing back button bug ?!
 		//finish();
 	}
+	
+	
+	public void setConnected() {
+		//TODO
+		//will only ever be called in LoginActivity but requires definition here
+	}
+	public void setDisconnected() {
+		//TODO
+	}
+	
+	
+	
+	public String getToken() {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		String token = dataGetter.getString("@string/str_token", null);
+		return token;
+	}
+	public String getPassword() {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "@string/salt", true);
+		String password = secureDataHandler.getString("@string/str_password");
+		return password;
+	}
+	public String getEmail() {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		String email = dataGetter.getString("@string/str_email", null);
+		return email;
+	}
+	public boolean getBolIsLoggedIn() {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		boolean bol = dataGetter.getBoolean("@string/str_bolIsLoggedIn", false);
+		return bol;
+	}
+	public boolean getBolIsRegisteredForNotifications() {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		boolean bol = dataGetter.getBoolean("@string/str_bolIsRegisteredForNotifications", false);
+		return bol;
+	}
+	public void setToken(String token) {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor dataSetter = dataGetter.edit();
+		dataSetter.putString("@string/str_token", null);
+		dataSetter.commit();
+	}
+	public void setPassword(String password) {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "@string/salt", true);
+		secureDataHandler.put("@string/str_password", password);
+	}
+	public void setEmail(String email) {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor dataSetter = dataGetter.edit();
+		dataSetter.putString("@string/str_email", email);
+		dataSetter.commit();
+	}
+	public void setBolIsLoggedIn(boolean bol) {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor dataSetter = dataGetter.edit();
+		dataSetter.putBoolean("str_bolIsLoggedIn", bol);
+		dataSetter.commit();
+	}
+	public void setBolIsRegisteredForNotifications(boolean bol) {
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor dataSetter = dataGetter.edit();
+		dataSetter.putBoolean("str_bolIsRegisteredForNotifications", bol);
+		dataSetter.commit();
+	}
+	
+	
 	
 	
 	
