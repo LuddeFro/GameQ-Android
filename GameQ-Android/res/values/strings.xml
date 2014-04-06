@@ -33,4 +33,9 @@
 	
 	<string name="salt">iuyavos32bdf83ika</string>
 	
+	<string name="alt0">0</string>
+	<string name="alt1">1</string>
+	<string name="alt2">2</string>
+	<string name="altx">error</string>
+	
 </resources>

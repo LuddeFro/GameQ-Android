@@ -1,11 +1,8 @@
 package com.example.gameq_android;
 
-import com.example.gameq_android.MainActivity.PlaceholderFragment;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,28 +10,20 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
 public class LoginActivity extends ActivityMaster{
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
+	
 
-	/**
-	 * The default email to populate the email field with.
-	 */
-	public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+	
 
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
@@ -143,7 +132,7 @@ public class LoginActivity extends ActivityMaster{
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if (mPassword.length() < 6) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
@@ -222,27 +211,25 @@ public class LoginActivity extends ActivityMaster{
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+		
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
+			String loginString = connectionsHandler.postLogin(mEmail, mPassword);
+			
+			if (loginString.equals("@string/alt1")) { //
+				return true;
+			} else if (loginString.equals("@string/alt0")) { //mismatch info
+				return false;
+			} else if (loginString.equals("@string/altx")) { //connection error 
+				cancel(true);
+				return false;
+			} else if (loginString.equals(null)) { // error occurred
+				cancel(false);
+				return false;
+			} else { //should be unreachableunreachable
 				return false;
 			}
-
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
-			return true;
+			
 		}
 
 		@Override
@@ -251,6 +238,9 @@ public class LoginActivity extends ActivityMaster{
 			showProgress(false);
 
 			if (success) {
+				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				intent.putExtra("@string/str_fromLogin", "yes");
+				startActivity(intent);
 				finish();
 			} else {
 				mPasswordView
@@ -259,8 +249,22 @@ public class LoginActivity extends ActivityMaster{
 			}
 		}
 
+		/**
+		 * nonFatalError is true if there was a connection error
+		 * is false if something went truly wrong
+		 */
 		@Override
 		protected void onCancelled() {
+			boolean nonFatalError = isCancelled();
+			View focusView = null;
+			if (nonFatalError) {
+				mEmailView.setError(getString(R.string.error_connection));
+				focusView = mEmailView;
+			} else {
+				mEmailView.setError(getString(R.string.error_fatal));
+				focusView = mEmailView;
+			}
+			focusView.requestFocus();
 			mAuthTask = null;
 			showProgress(false);
 		}

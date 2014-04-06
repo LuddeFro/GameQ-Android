@@ -36,23 +36,41 @@ public class ConnectionHandler {
 		String urlPath = "@string/str_LogoutURL";
 		post(urlParameters, urlPath);
 	}	
-	
-	public void postLogin(String email, String password) {
+	/**
+	 * 
+	 * @param email
+	 * @param password
+	 * @return
+	 * returns one of the strings alt0, alt1 as defined in values/strings
+	 * alt0 -> refused login
+	 * alt1 -> login accepted
+	 * 
+	 */
+	public String postLogin(String email, String password) {
 		if (email == null || password == null) {
-			return;
+			return "@string/alt0";
 		}
 		String urlParameters = "email=" + email + "&losenord=" + password;
 		String urlPath = "@string/str_LoginURL";
-		post(urlParameters, urlPath);
+		return post(urlParameters, urlPath);
 	}
 	
-	public void postUpdateDraw(String email) {
+	/**
+	 * 
+	 * @param email
+	 * a return val of null == error,
+	 * a return val @string/alt0 is an empty list
+	 * 
+	 */
+	
+	
+	public String postUpdateDraw(String email) {
 		if (email == null) {
-			return;
+			return "@string/alt0";
 		}
 		String urlParameters = "email=" + email;
 		String urlPath = "@string/str_UpdateDrawURL";
-		post(urlParameters, urlPath);
+		return post(urlParameters, urlPath);
 	}
 	
 	public void postToken(String token, String email) {
@@ -71,7 +89,7 @@ public class ConnectionHandler {
 		post(urlParameters, urlPath);
 	}
 	
-	private void post(String urlParameters, String urlPath) {
+	private String post(String urlParameters, String urlPath) {
 
 		String url = "@string/str_URL" + urlPath;
 		URL obj = null;
@@ -102,8 +120,9 @@ public class ConnectionHandler {
 		
 		if (returnString == null) {
 			System.out.println("URL Error (nullResponse) for " + url );
+			return null;
 		} else {
-			handleResponse(returnString);
+			return handleResponse(returnString);
 		}
 	}
 	
@@ -144,7 +163,7 @@ public class ConnectionHandler {
 		return response.toString();
 	}
 	
-	private void handleResponse(String response) {
+	private String handleResponse(String response) {
 		System.out.println("response: " + response);
 		
 		if (response.length() >= 8) {
@@ -152,8 +171,7 @@ public class ConnectionHandler {
 	            response = response.substring(8);
 	            int items = Integer.parseInt(response.substring(0, 2));
 	            if (items == 0) {
-	                //TODO update DeviceList with null array
-	                return;
+	                return "@string/alt0";
 	            }
 	            
 	            response = response.substring(2);
@@ -172,27 +190,30 @@ public class ConnectionHandler {
 	                    response = response.substring(len + 2);
 	                }
 	            }
-	            //TODO send deviceArray to DeviceList
-	            return;
+	            String backToString = deviceArray[0];
+	            for (int i = 1; i<items; i++) {
+	            	backToString = backToString + ":" + deviceArray[i];
+	            }
+	            return backToString;
 	        }
 	    }  
 		
 		if (response.equals("postedDevice")) {
-	        return;
+	        return "@string/alt1";
 	    }
 		
 		// if sign in was successful
 	    if (response.equals("sign in success"))
 	    {
 	    	parentActivity.setConnected();
-	        return;
+	        return "@string/alt1";
 	    }
 	    
 	 // if sign in failed
 	    if (response.equals("sign in failed"))
 	    {
 	        alert("You entered an invalid email/password combo");
-	        return;
+	        return "@string/alt0";
 	    }
 	    
 	  //if you just logged out
@@ -202,24 +223,24 @@ public class ConnectionHandler {
 	        {
 	            //if you logged out manually
 	            parentActivity.setDisconnected();
-	            return;
+	            return "@string/alt1";
 	        }
 	        else {
 	            //if you got "badsession" or "no" (an alert has already been sent)
 	            disconnected = false;
 	        }
-	        return;
+	        return "@string/alt0";
 	    }
 	    
 	    if (response.equals("signing up"))
 	    {
 	        alert("Welcome to GameQ, you should be able to log in immediatley with the password and username you provided");
-	        return;
+	        return "@string/alt1";
 	    }
 	    if (response.equals("duplicate"))
 	    {
 	    	alert("An account with that e-mail address already exists");
-	    	return;
+	    	return "@string/alt0";
 	    }
 	    if (response.equals("badsession"))
 	    {
@@ -230,7 +251,7 @@ public class ConnectionHandler {
 	       
 	        alert("You were disconnected from the server, check your connection and try reconnecting!");
 	        
-	        return;
+	        return "@string/altx";
 	    }
 	    if (response.equals("no"))
 	    {
@@ -242,9 +263,10 @@ public class ConnectionHandler {
 	        
 	        // mobile alert
 	        alert("Connection error, try again in a minute!");
+	        return "@string/altx";
 	        
 	    }
-		
+		return null;
 	}
 	private void alert(String alert) {
 		//TODO show an alert message 

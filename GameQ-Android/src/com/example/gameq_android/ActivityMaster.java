@@ -13,7 +13,7 @@ import com.example.gameq_android.MainActivity.PlaceholderFragment;
 
 public class ActivityMaster extends ActionBarActivity {
 
-	private ConnectionHandler connectionsHandler;
+	public ConnectionHandler connectionsHandler;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		
