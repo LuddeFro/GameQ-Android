@@ -1,9 +1,41 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/device_detail"
     style="?android:attr/textAppearanceLarge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context="com.example.gameq_android.DeviceDetailFragment" />
+    tools:context="com.example.gameq_android.DeviceDetailFragment" >
+
+    <ImageView
+        android:id="@+id/imgStatus"
+        android:tag="@string/imgStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/blue_light" 
+        android:contentDescription="@string/imgStatus" />
+
+    <TextView
+        android:id="@+id/txtDeviceName"
+        android:tag="@string/txtDeviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgStatus"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/imgStatus" />
+
+    <TextView
+        android:id="@+id/txtStatusText"
+        android:tag="@string/txtStatusText" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imgStatus"
+        android:layout_marginTop="42dp" />
+
+</RelativeLayout>

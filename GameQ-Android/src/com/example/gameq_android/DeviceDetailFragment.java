@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.example.gameq_android.dummy.DummyContent;
 
@@ -54,8 +56,33 @@ public class DeviceDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.device_detail))
-					.setText(mItem.content);
+			RelativeLayout rel = ((RelativeLayout) rootView.findViewById(R.id.device_detail));
+			ImageView iv = (ImageView)rel.findViewWithTag("@string/imgStatus");
+			switch (mItem.status) {
+				case 0:
+					iv.setImageResource(R.drawable.red_light);
+					break;
+				case 1:
+					iv.setImageResource(R.drawable.yellow_light);
+					break;
+				case 2:
+					iv.setImageResource(R.drawable.green_light);
+					break;
+				case 3:
+					iv.setImageResource(R.drawable.grey_light);
+					break;
+				case 4:
+					iv.setImageResource(R.drawable.grey_light);
+					break;				
+				default:
+					iv.setImageResource(R.drawable.blue_light);
+					break;
+			}
+			TextView tv1 = (TextView)rel.findViewWithTag("@string/txtStatusText");
+			TextView tv2 = (TextView)rel.findViewWithTag("@string/txtDeviceName");
+			tv1.setText(mItem.statusText);
+			tv2.setText(mItem.deviceName);
+			
 		}
 
 		return rootView;

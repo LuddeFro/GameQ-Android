@@ -3,6 +3,7 @@ package com.example.gameq_android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.BaseAdapter;
 
 /**
  * An activity representing a list of Devices. This activity has different
@@ -48,6 +49,8 @@ public class DeviceListActivity extends FragmentActivity implements
 
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
+	
+	
 
 	/**
 	 * Callback method from {@link DeviceListFragment.Callbacks} indicating that

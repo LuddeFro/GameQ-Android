@@ -1,10 +1,12 @@
 package com.example.gameq_android;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.example.gameq_android.dummy.DummyContent;
@@ -70,11 +72,31 @@ public class DeviceListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// TODO: replace with a real list adapter.
+		
+		/*
 		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, DummyContent.ITEMS));
+				*/
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		ConnectionHandler connectionsHandler = new ConnectionHandler();
+		String email = getEmail();
+		String listString = connectionsHandler.postUpdateDraw(email);
+		String[] arrayString =listString.split(":");
+		setListAdapter(new ListAdapter(getActivity(), arrayString));
+		((BaseAdapter)getListAdapter()).notifyDataSetChanged();
+		/*
+		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+				android.R.layout.simple_list_item_activated_1,
+				android.R.id.text1, DummyContent.ITEMS));
+				*/
+	}
+	
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -86,6 +108,13 @@ public class DeviceListFragment extends ListFragment {
 			setActivatedPosition(savedInstanceState
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
+	}
+	
+	public String getEmail() {
+		Activity activity = getActivity();
+		SharedPreferences dataGetter = activity.getPreferences(Context.MODE_PRIVATE);
+		String email = dataGetter.getString("@string/str_email", null);
+		return email;
 	}
 
 	@Override
@@ -149,4 +178,6 @@ public class DeviceListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
+
+	
 }

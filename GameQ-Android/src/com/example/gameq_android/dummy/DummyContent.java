@@ -25,9 +25,9 @@ public class DummyContent {
 
 	static {
 		// Add 3 sample items.
-		addItem(new DummyItem("1", "Item 1"));
-		addItem(new DummyItem("2", "Item 2"));
-		addItem(new DummyItem("3", "Item 3"));
+		addItem(new DummyItem("1", "luddesdator", "is online on Heroes of Newerth", 1));
+		addItem(new DummyItem("2", "sebbesdator", "is currently in a Dota 2 match", 2));
+		addItem(new DummyItem("3", "oskarsdator", "is not gaming at the moment", 0));
 	}
 
 	private static void addItem(DummyItem item) {
@@ -40,16 +40,20 @@ public class DummyContent {
 	 */
 	public static class DummyItem {
 		public String id;
-		public String content;
+		public String deviceName;
+		public String statusText;
+		public int status;
 
-		public DummyItem(String id, String content) {
+		public DummyItem(String id, String deviceName, String statusText, int status) {
 			this.id = id;
-			this.content = content;
+			this.status = status;
+			this.statusText = statusText;
+			this.deviceName = deviceName;
 		}
 
 		@Override
 		public String toString() {
-			return content;
+			return deviceName + statusText;
 		}
 	}
 }

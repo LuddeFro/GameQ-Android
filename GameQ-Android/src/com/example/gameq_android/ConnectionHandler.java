@@ -26,6 +26,12 @@ public class ConnectionHandler {
 		
 		
 	}
+	/**
+	 * constructor for deviceListFragment
+	 */
+	public ConnectionHandler() {
+		disconnected = false;
+	}
 	
 	public void postLogout() {
 		String token = parentActivity.getToken();
@@ -179,7 +185,7 @@ public class ConnectionHandler {
 	            for (int i = 0; i<items; i++) {
 	            	int len = Integer.parseInt(response.substring(0,  2));
 	                response = response.substring(2);
-	                String itemString = response.substring(0,  len+2);
+	                String itemString = response.substring(0,  len+4);
 	                System.out.println(itemString);
 	                deviceArray[1] = itemString;
 	                
@@ -187,7 +193,7 @@ public class ConnectionHandler {
 	                    response = null;
 	                }
 	                else {
-	                    response = response.substring(len + 2);
+	                    response = response.substring(len + 4);
 	                }
 	            }
 	            String backToString = deviceArray[0];
@@ -231,17 +237,19 @@ public class ConnectionHandler {
 	        }
 	        return "@string/alt0";
 	    }
-	    
+	    // registration successful
 	    if (response.equals("signing up"))
 	    {
 	        alert("Welcome to GameQ, you should be able to log in immediatley with the password and username you provided");
 	        return "@string/alt1";
 	    }
+	    // user already exists, registration failed
 	    if (response.equals("duplicate"))
 	    {
 	    	alert("An account with that e-mail address already exists");
 	    	return "@string/alt0";
 	    }
+	    // session was broken / corrupted
 	    if (response.equals("badsession"))
 	    {
 	    	//session was broken
@@ -253,6 +261,7 @@ public class ConnectionHandler {
 	        
 	        return "@string/altx";
 	    }
+	    // server reached unreachable code
 	    if (response.equals("no"))
 	    {
 	        //should be unreachable, disconnect the bastard!

@@ -38,4 +38,8 @@
 	<string name="alt2">2</string>
 	<string name="altx">error</string>
 	
+	<string name="txtStatusText">Statustext</string>
+	<string name="txtDeviceName">DeviceName</string>
+	<string name="imgStatus">Status Image</string>
+	
 </resources>
