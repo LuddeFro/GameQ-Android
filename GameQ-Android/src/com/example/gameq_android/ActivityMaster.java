@@ -1,26 +1,78 @@
 package com.example.gameq_android;
 
 
+import java.io.IOException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.gameq_android.MainActivity.PlaceholderFragment;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class ActivityMaster extends ActionBarActivity {
+	
+	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	public static final String EXTRA_MESSAGE = "message";
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    
+    Context context;
+    GoogleCloudMessaging gcm;
+    String regid;
+    //Project Number from GameQ @ https://console.developers.google.com/project/
+    //project GameQ by GameQ, only accessible for GameQ under "projects"
+    String SENDER_ID = "773141536608";
+    
+    /**
+     * Tag used on log messages.
+     */
+    static final String TAG = "GameQ-Android";
 
 	public ConnectionHandler connectionsHandler;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+		context = getApplicationContext();
 		
 		connectionsHandler = new ConnectionHandler(this);
-		
+		if (!checkPlayServices()) {
+	    	Log.i(TAG, "@string/out_of_date_Google_Services_APK");
+	    	alert("@string/out_of_date_Google_Services_APK");
+	    } else {
+	    	gcm = GoogleCloudMessaging.getInstance(this);
+            regid = getRegistrationId(context);
+
+            if (regid.isEmpty()) {
+                registerInBackground();
+            }
+	    }
+	}
+	
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    if (!checkPlayServices()) {
+	    	Log.i(TAG, "@string/out_of_date_Google_Services_APK");
+	    	alert("@string/out_of_date_Google_Services_APK");
+	    	
+	    }
+	}
+	
+	protected void alert(String message)
+	{
+		//TODO
+		return;
 	}
 	
 	
@@ -36,6 +88,7 @@ public class ActivityMaster extends ActionBarActivity {
 		setEmail(null);
 		setBolIsLoggedIn(false);
 		setBolIsRegisteredForNotifications(false);
+		setToken(null);
 		
 		//TODO unregister for push notifications
 		showLogin(null, null);
@@ -137,7 +190,25 @@ public class ActivityMaster extends ActionBarActivity {
 		dataSetter.commit();
 	}
 	
-	
+	/**
+	 * Check the device to make sure it has the Google Play Services APK. If
+	 * it doesn't, display a dialog that allows users to download the APK from
+	 * the Google Play Store or enable it in the device's system settings.
+	 */
+	private boolean checkPlayServices() {
+	    int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+	    if (resultCode != ConnectionResult.SUCCESS) {
+	        if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+	            GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+	                    PLAY_SERVICES_RESOLUTION_REQUEST).show();
+	        } else {
+	            Log.i(TAG, "This device is not supported.");
+	            finish();
+	        }
+	        return false;
+	    }
+	    return true;
+	}
 	
 	
 	
@@ -162,4 +233,83 @@ public class ActivityMaster extends ActionBarActivity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	/**
+	 * Gets the current registration ID for application on GCM service.
+	 * <p>
+	 * If result is empty, the app needs to register.
+	 *
+	 * @return registration ID, or empty string if there is no existing
+	 *         registration ID.
+	 */
+	private String getRegistrationId(Context context) {
+	    String token = getToken();
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+	    if (token == null || token.isEmpty()) {
+	        Log.i(TAG, "Registration not found.");
+	        return "";
+	    }
+	    // Check if app was updated; if so, it must clear the registration ID
+	    // since the existing regID is not guaranteed to work with the new
+	    // app version.
+	    int registeredVersion = dataGetter.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+	    int currentVersion = getAppVersion(context);
+	    if (registeredVersion != currentVersion) {
+	        Log.i(TAG, "App version changed.");
+	        return "";
+	    }
+	    return token;
+	}
+	
+	protected static int getAppVersion(Context context) {
+	    try {
+	        PackageInfo packageInfo = context.getPackageManager()
+	                .getPackageInfo(context.getPackageName(), 0);
+	        return packageInfo.versionCode;
+	    } catch (NameNotFoundException e) {
+	        // should never happen
+	        throw new RuntimeException("Could not get package name: " + e);
+	    }
+	}
+	
+	/**
+	 * Registers the application with GCM servers asynchronously.
+	 * <p>
+	 * Stores the registration ID and app versionCode in the application's
+	 * shared preferences.
+	 */
+	private void registerInBackground() {
+	    new AsyncTask<Void, Void, String>() {
+	        @Override
+	        protected String doInBackground(Void... params) {
+	            String msg = "";
+	            try {
+	                if (gcm == null) {
+	                    gcm = GoogleCloudMessaging.getInstance(context);
+	                }
+	                regid = gcm.register(SENDER_ID);
+	                msg = "Device registered, registration ID=" + regid;
+	                
+	                connectionsHandler.postToken(regid, getEmail());
+	                setToken(regid);
+	                
+	                SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+	        		SharedPreferences.Editor dataSetter = dataGetter.edit();
+	        		dataSetter.putInt(PROPERTY_APP_VERSION, getAppVersion(context));
+	        		dataSetter.commit();
+	                
+	            } catch (IOException ex) {
+	                msg = "Error :" + ex.getMessage();
+	                
+	            }
+	            return msg;
+	        }
+
+	        @Override
+	        protected void onPostExecute(String msg) {
+	            
+	        }
+	    }.execute(null, null, null);
+	}
+	
 }

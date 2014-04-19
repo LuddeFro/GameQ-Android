@@ -240,6 +240,9 @@ public class LoginActivity extends ActivityMaster{
 			if (success) {
 				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 				intent.putExtra("@string/str_fromLogin", "yes");
+				setEmail(mEmail);
+				setPassword(mPassword);
+				setBolIsLoggedIn(true);
 				startActivity(intent);
 				finish();
 			} else {

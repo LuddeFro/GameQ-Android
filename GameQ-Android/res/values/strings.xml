@@ -38,6 +38,8 @@
 	<string name="alt2">2</string>
 	<string name="altx">error</string>
 	
+	<string name="@string/out_of_date_Google_Services_APK">Your Google Services APK is out of date. Push Notifications may not be working.</string>
+	
 	<string name="txtStatusText">Statustext</string>
 	<string name="txtDeviceName">DeviceName</string>
 	<string name="imgStatus">Status Image</string>
