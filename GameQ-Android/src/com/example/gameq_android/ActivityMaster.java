@@ -31,7 +31,7 @@ public class ActivityMaster extends ActionBarActivity {
     String regid;
     //Project Number from GameQ @ https://console.developers.google.com/project/
     //project GameQ by GameQ, only accessible for GameQ under "projects"
-    String SENDER_ID = "773141536608";
+    String SENDER_ID = "647277380052";
     
     /**
      * Tag used on log messages.
