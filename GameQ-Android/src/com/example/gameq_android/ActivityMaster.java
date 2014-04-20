@@ -3,11 +3,14 @@ package com.example.gameq_android;
 
 import java.io.IOException;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -71,14 +74,28 @@ public class ActivityMaster extends ActionBarActivity {
 	
 	protected void alert(String message)
 	{
-		//TODO
-		return;
+		new AlertDialog.Builder(this)
+	    .setTitle("GameQ - Alert")
+	    .setMessage(message)
+	    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with delete
+	        }
+	     })/*
+	    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // do nothing
+	        }
+	     })*/
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
 	}
 	
 	
 	
 	protected void showWebsite(View view) {
-		//TODO
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("@string/str_website"));
+		startActivity(browserIntent);
 	}
 	
 	public void logout(View view) {

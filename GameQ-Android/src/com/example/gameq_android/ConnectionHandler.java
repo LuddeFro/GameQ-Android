@@ -10,6 +10,8 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class ConnectionHandler {
 	private boolean disconnected;
@@ -56,6 +58,8 @@ public class ConnectionHandler {
 		if (email == null || password == null) {
 			return "@string/alt0";
 		}
+		Encryptor enc = new Encryptor();
+		password = enc.HashSHA256(password);
 		String urlParameters = "email=" + email + "&losenord=" + password;
 		String urlPath = "@string/str_LoginURL";
 		return post(urlParameters, urlPath);
@@ -90,6 +94,8 @@ public class ConnectionHandler {
 	}
 	
 	public void postRegister(String email, String firstname, String lastname, int gender, int yob, String country, String losenord, String secretq, String secret) {
+		Encryptor enc = new Encryptor();
+		losenord = enc.HashSHA256(losenord);
 		String urlParameters = "email=" + email + "&firstname=" + firstname + "&lastname=" + lastname + "&gender=" + gender + "&yob=" + yob + "&country=" + country + "&losenord=" + losenord + "&secretq=" + secretq + "&secret=" + secret;
 		String urlPath = "@string/str_RegisterURL";
 		post(urlParameters, urlPath);
@@ -277,7 +283,21 @@ public class ConnectionHandler {
 	    }
 		return null;
 	}
-	private void alert(String alert) {
-		//TODO show an alert message 
+	private void alert(String message) {
+		new AlertDialog.Builder(parentActivity)
+	    .setTitle("GameQ - Alert")
+	    .setMessage(message)
+	    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with delete
+	        }
+	     })/*
+	    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // do nothing
+	        }
+	     })*/
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
 	}
 }
