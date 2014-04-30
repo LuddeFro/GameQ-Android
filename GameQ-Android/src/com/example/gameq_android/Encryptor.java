@@ -16,7 +16,7 @@ public class Encryptor{
 	 * @param password the password that should be hashed.
 	 * @return a hashed hex encoded version of the string, returns null in case of error.
 	 */
-	public static String HashSHA256(String password) throws NoSuchAlgorithmException {
+	public static String hashSHA256(String password) {
         try {
         	MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(password.getBytes());

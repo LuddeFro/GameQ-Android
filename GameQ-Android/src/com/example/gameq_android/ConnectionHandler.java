@@ -59,7 +59,7 @@ public class ConnectionHandler {
 			return "@string/alt0";
 		}
 		Encryptor enc = new Encryptor();
-		password = enc.HashSHA256(password);
+		password = Encryptor.hashSHA256(password);
 		String urlParameters = "email=" + email + "&losenord=" + password;
 		String urlPath = "@string/str_LoginURL";
 		return post(urlParameters, urlPath);
@@ -95,7 +95,7 @@ public class ConnectionHandler {
 	
 	public void postRegister(String email, String firstname, String lastname, int gender, int yob, String country, String losenord, String secretq, String secret) {
 		Encryptor enc = new Encryptor();
-		losenord = enc.HashSHA256(losenord);
+		losenord = Encryptor.hashSHA256(losenord);
 		String urlParameters = "email=" + email + "&firstname=" + firstname + "&lastname=" + lastname + "&gender=" + gender + "&yob=" + yob + "&country=" + country + "&losenord=" + losenord + "&secretq=" + secretq + "&secret=" + secret;
 		String urlPath = "@string/str_RegisterURL";
 		post(urlParameters, urlPath);
