@@ -3,7 +3,9 @@ package com.example.gameq_android;
 
 import java.io.IOException;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -28,7 +31,8 @@ public class ActivityMaster extends ActionBarActivity {
 	public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
-    
+    private final Activity thisActivity = this;
+    protected Dialog dialog;
     Context context;
     GoogleCloudMessaging gcm;
     String regid;
@@ -49,9 +53,21 @@ public class ActivityMaster extends ActionBarActivity {
 		context = getApplicationContext();
 		
 		connectionsHandler = new ConnectionHandler(this);
-		if (!checkPlayServices()) {
-	    	Log.i(TAG, "@string/out_of_date_Google_Services_APK");
-	    	alert("@string/out_of_date_Google_Services_APK");
+		
+	}
+	
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    //if (!checkPlayServices()) {
+	    	//Log.i(TAG, "@string/out_of_date_Google_Services_APK");
+	    	//alert("@string/out_of_date_Google_Services_APK");
+	    	
+	    //}
+	    if (!checkPlayServices()) {
+			Log.i(TAG, "!checkPlayServices() returns true in onCreate() Activity Master");
+	    	//Log.i(TAG, "@string/out_of_date_Google_Services_APK");
+	    	//alert("@string/out_of_date_Google_Services_APK");
 	    } else {
 	    	gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
@@ -63,13 +79,14 @@ public class ActivityMaster extends ActionBarActivity {
 	}
 	
 	@Override
-	protected void onResume() {
-	    super.onResume();
-	    if (!checkPlayServices()) {
-	    	Log.i(TAG, "@string/out_of_date_Google_Services_APK");
-	    	alert("@string/out_of_date_Google_Services_APK");
-	    	
-	    }
+	protected void onStop() {
+		dialog.dismiss();
+		super.onStop();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
 	}
 	
 	protected void alert(String message)
@@ -90,6 +107,8 @@ public class ActivityMaster extends ActionBarActivity {
 	    .setIcon(android.R.drawable.ic_dialog_alert)
 	     .show();
 	}
+	
+	
 	
 	
 	
@@ -212,12 +231,15 @@ public class ActivityMaster extends ActionBarActivity {
 	 * it doesn't, display a dialog that allows users to download the APK from
 	 * the Google Play Store or enable it in the device's system settings.
 	 */
-	private boolean checkPlayServices() {
+	protected boolean checkPlayServices() {
 	    int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+	    Log.i(TAG, "checkGooglePlayServicesAvailable, connectionStatusCode="
+	    	    + resultCode);
 	    if (resultCode != ConnectionResult.SUCCESS) {
 	        if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-	            GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-	                    PLAY_SERVICES_RESOLUTION_REQUEST).show();
+	        	showGooglePlayServicesAvailabilityErrorDialog(resultCode);
+	            //GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+	                    //PLAY_SERVICES_RESOLUTION_REQUEST).show();
 	        } else {
 	            Log.i(TAG, "This device is not supported.");
 	            finish();
@@ -226,6 +248,24 @@ public class ActivityMaster extends ActionBarActivity {
 	    }
 	    return true;
 	}
+	private void showGooglePlayServicesAvailabilityErrorDialog(
+		    final int connectionStatusCode) {
+			this.runOnUiThread(new Runnable() {
+		    public void run() {
+		    dialog = GooglePlayServicesUtil.getErrorDialog(
+		        connectionStatusCode, thisActivity,
+		        0);
+		        if (dialog == null) {
+		                Log.e(TAG,
+		                        "couldn't get GooglePlayServicesUtil.getErrorDialog");
+		                Toast.makeText(context,
+		                        "incompatible version of Google Play Services",
+		                        Toast.LENGTH_LONG).show();
+		            }
+		            dialog.show();
+		       }
+		    });
+		}
 	
 	
 	
@@ -259,7 +299,7 @@ public class ActivityMaster extends ActionBarActivity {
 	 * @return registration ID, or empty string if there is no existing
 	 *         registration ID.
 	 */
-	private String getRegistrationId(Context context) {
+	protected String getRegistrationId(Context context) {
 	    String token = getToken();
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
 	    if (token == null || token.isEmpty()) {
@@ -295,7 +335,7 @@ public class ActivityMaster extends ActionBarActivity {
 	 * Stores the registration ID and app versionCode in the application's
 	 * shared preferences.
 	 */
-	private void registerInBackground() {
+	protected void registerInBackground() {
 	    new AsyncTask<Void, Void, String>() {
 	        @Override
 	        protected String doInBackground(Void... params) {

@@ -1,11 +1,14 @@
 package com.example.gameq_android;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +19,26 @@ public class MainActivity extends ActivityMaster {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
+		Intent intent = getIntent();
+		String fromLogin = intent.getStringExtra("@string/str_fromLogin");
+		
+		if (fromLogin == null) {
+			
+			boolean bolIsLoggedIn = getBolIsLoggedIn();
+			String email = getEmail();
+			String password = getPassword();
+			
+			if (password == null || email == null || bolIsLoggedIn == false) { 
+				//not valid login, nullify data and show login screen
+				logout(null);
+			} else { // creds valid?! attemptlogin with email + password
+				showLogin(email, password);
+				
+			}
+		}
+		
 		setContentView(R.layout.activity_main);
 
 		if (savedInstanceState == null) {
@@ -25,20 +46,11 @@ public class MainActivity extends ActivityMaster {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		boolean bolIsLoggedIn = getBolIsLoggedIn();
-		String email = getEmail();
-		String password = getPassword();
 		
-		Intent intent = getIntent();
-		String fromLogin = intent.getStringExtra("@string/str_fromLogin");
-		if (!(fromLogin.equals("yes"))) {
-			if (password == null || email == null || bolIsLoggedIn == false) { 
-				//not valid login, nullify data and show login screen
-				logout(null);
-			} else { // creds valid?! attemptlogin with email + password
-				showLogin(email, password);
-			}
-		}
+		
+		
+		
+		
 		
 		
 		
