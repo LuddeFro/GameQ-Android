@@ -2,6 +2,7 @@ package com.example.gameq_android;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 
 /**
@@ -15,6 +16,7 @@ public class Encryptor{
 	 * HashSHA256
 	 * @param password the password that should be hashed.
 	 * @return a hashed hex encoded version of the string, returns null in case of error.
+	 * returned hex hash has lowercase letters
 	 */
 	public static String hashSHA256(String password) {
         try {
@@ -38,6 +40,6 @@ public class Encryptor{
          buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
          buf.append(hexDigit[b[j] & 0x0f]);
       }
-      return buf.toString();
+      return buf.toString().toLowerCase(Locale.US);
    }
 }

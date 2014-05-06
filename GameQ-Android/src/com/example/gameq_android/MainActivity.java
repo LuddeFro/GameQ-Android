@@ -22,8 +22,8 @@ public class MainActivity extends ActivityMaster {
 
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
-		String fromLogin = intent.getStringExtra("@string/str_fromLogin");
-		
+		String fromLogin = intent.getStringExtra(getResources().getString(R.string.str_fromLogin));
+		Log.i(TAG, "Main being shown ------------------------");
 		if (fromLogin == null) {
 			
 			boolean bolIsLoggedIn = getBolIsLoggedIn();
@@ -34,8 +34,8 @@ public class MainActivity extends ActivityMaster {
 				//not valid login, nullify data and show login screen
 				logout(null);
 			} else { // creds valid?! attemptlogin with email + password
-				showLogin(email, password);
-				
+				//showLogin(email, password);
+				//assume login
 			}
 		}
 		

@@ -2,13 +2,17 @@ package com.example.gameq_android;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.example.gameq_android.LoginActivity.UserLoginTask;
 import com.example.gameq_android.dummy.DummyContent;
 
 /**
@@ -22,6 +26,11 @@ import com.example.gameq_android.dummy.DummyContent;
  */
 public class DeviceListFragment extends ListFragment {
 
+	static final String TAG = "GameQ-Android";
+	private static final String SALT = "iuyavos32bdf83ika";
+	private PostTask mAuthTask;
+	public String mEmail;
+	
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * activated item position. Only used on tablets.
@@ -84,12 +93,15 @@ public class DeviceListFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 
-		ConnectionHandler connectionsHandler = new ConnectionHandler();
-		String email = getEmail();
-		String listString = connectionsHandler.postUpdateDraw(email);
+		
+		mEmail = getEmail();
+		mAuthTask = new PostTask();
+		mAuthTask.execute((Void) null);
+		/*
+		String listString = ((DeviceListActivity) getActivity()).connectionsHandler.postUpdateDraw(email);
 		String[] arrayString =listString.split(":");
 		setListAdapter(new ListAdapter(getActivity(), arrayString));
-		((BaseAdapter)getListAdapter()).notifyDataSetChanged();
+		((BaseAdapter)getListAdapter()).notifyDataSetChanged();*/
 		/*
 		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
@@ -111,9 +123,12 @@ public class DeviceListFragment extends ListFragment {
 	}
 	
 	public String getEmail() {
-		Activity activity = getActivity();
-		SharedPreferences dataGetter = activity.getPreferences(Context.MODE_PRIVATE);
-		String email = dataGetter.getString("@string/str_email", null);
+		SecurePreferences secureDataHandler = new SecurePreferences(getActivity().getBaseContext(), "securePrefs", SALT, true);
+		String email = secureDataHandler.getString("@string/str_email");
+		/*
+		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
+		String email = dataGetter.getString("@string/str_email", null);*/
+		Log.i(TAG, "got email: " + email);
 		return email;
 	}
 
@@ -177,6 +192,54 @@ public class DeviceListFragment extends ListFragment {
 		}
 
 		mActivatedPosition = position;
+	}
+	
+	/**
+	 * Represents an asynchronous login/registration task used to authenticate
+	 * the user.
+	 */
+	public class PostTask extends AsyncTask<Void, Void, Boolean> {
+		
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			
+			String listString = ((DeviceListActivity) getActivity()).connectionsHandler.postUpdateDraw(mEmail);
+			final String[] arrayString = listString.split(":");
+			getActivity().runOnUiThread(new Runnable() {
+			    public void run() {
+			    	setListAdapter(new ListAdapter(getActivity(), arrayString));
+					((BaseAdapter)getListAdapter()).notifyDataSetChanged();
+			    }
+			});
+			
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			mAuthTask = null;
+
+			if (success) {
+				
+			} else {
+				
+			}
+		}
+
+		/**
+		 * nonFatalError is true if there was a connection error
+		 * is false if something went truly wrong
+		 */
+		@Override
+		protected void onCancelled() {
+			boolean nonFatalError = isCancelled();
+			if (nonFatalError) {
+				
+			} else {
+				
+			}
+			mAuthTask = null;
+		}
 	}
 
 	

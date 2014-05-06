@@ -22,7 +22,7 @@ import android.widget.BaseAdapter;
  */
 public class DeviceListActivity extends FragmentActivity implements
 		DeviceListFragment.Callbacks {
-
+	public ConnectionHandler connectionsHandler;
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
@@ -32,6 +32,7 @@ public class DeviceListActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		connectionsHandler = new ConnectionHandler();
 		setContentView(R.layout.activity_device_list);
 
 		if (findViewById(R.id.device_detail_container) != null) {

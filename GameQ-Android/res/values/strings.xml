@@ -24,20 +24,11 @@
 	<string name="str_token">token</string>
 	<string name="str_fromLogin">fromLogin</string>
 	
-	<string name="str_URL">http://185.2.155.172/</string>
-	<string name="str_LoginURL">signing.php</string>
-	<string name="str_LogoutURL">logging.php</string>
-	<string name="str_UpdateDrawURL">updateDraw.php</string>
-	<string name="str_UpdateTokenURL">upAndroidToken.php</string>
-	<string name="str_RegisterURL">regging.php</string>
+	
 	<string name="str_website">https://www.gameq.com</string>
 	
-	<string name="salt">iuyavos32bdf83ika</string>
 	
-	<string name="alt0">0</string>
-	<string name="alt1">1</string>
-	<string name="alt2">2</string>
-	<string name="altx">error</string>
+	
 	
 	<string name="out_of_date_Google_Services_APK">Your Google Services APK is out of date. Push Notifications may not be working.</string>
 	

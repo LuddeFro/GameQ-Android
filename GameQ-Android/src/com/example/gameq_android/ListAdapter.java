@@ -1,6 +1,7 @@
 package com.example.gameq_android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 public class ListAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final String[] values;
+	static final String TAG = "GameQ-Android";
 
 	public ListAdapter(Context context, String[] values) {
 		super(context, R.layout.rowlayout, values);
@@ -23,10 +25,17 @@ public class ListAdapter extends ArrayAdapter<String> {
 	    LayoutInflater inflater = (LayoutInflater) context
 	        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
-	    TextView statusTextView = (TextView) rowView.findViewWithTag("string/txtStatusText");
-	    TextView deviceTextView = (TextView) rowView.findViewWithTag("string/txtDeviceName");
+	    TextView statusTextView = (TextView) rowView.findViewById(R.id.secondLine);
+	    TextView deviceTextView = (TextView) rowView.findViewById(R.id.firstLine);
 	    ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 	    String item = values[position];
+	    Log.i(TAG, "tem: " + item);
+	    if (item.length() <= 3) {
+	    	imageView.setImageResource(R.drawable.transparent);
+	    	statusTextView.setText("For info on connecting other devices go to GameQ.com");
+	    	deviceTextView.setText("No devices detected");
+	    	return rowView;
+	    }
 	    String statusCode = item.substring(2, 4);
 	    String gameCode = item.substring(0, 2);
 	    int codeStatus = Integer.parseInt(statusCode);

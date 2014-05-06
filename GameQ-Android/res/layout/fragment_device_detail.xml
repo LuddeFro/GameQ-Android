@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imgStatus"
-        android:tag="@string/imgStatus"
+        android:tag="imgStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/txtDeviceName"
-        android:tag="@string/txtDeviceName"
+        android:tag="txtDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imgStatus"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/txtStatusText"
-        android:tag="@string/txtStatusText" 
+        android:tag="txtStatusText" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

@@ -33,6 +33,7 @@ public class ActivityMaster extends ActionBarActivity {
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final Activity thisActivity = this;
     protected Dialog dialog;
+    private static final String SALT = "iuyavos32bdf83ika";
     Context context;
     GoogleCloudMessaging gcm;
     String regid;
@@ -113,7 +114,7 @@ public class ActivityMaster extends ActionBarActivity {
 	
 	
 	protected void showWebsite(View view) {
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("@string/str_website"));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.str_website)));
 		startActivity(browserIntent);
 	}
 	
@@ -153,8 +154,8 @@ public class ActivityMaster extends ActionBarActivity {
 	protected void showLogin(String email, String password) {
 		Intent intent = new Intent(this, LoginActivity.class);
 		//make sure back button cannot take user back to being logged in
-		intent.putExtra("@string/str_email", email);
-		intent.putExtra("@string/str_password", password);
+		intent.putExtra(getResources().getString(R.string.str_email), email);
+		intent.putExtra(getResources().getString(R.string.str_password), password);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(intent);
 		//superfluous addition to preventing back button bug ?!
@@ -173,57 +174,119 @@ public class ActivityMaster extends ActionBarActivity {
 	
 	
 	public String getToken() {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		String token = secureDataHandler.getString("@string/str_token");
+		/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		String token = dataGetter.getString("@string/str_token", null);
+		String token = dataGetter.getString("@string/str_token", null);*/
+		Log.i(TAG, "got Token: " + token);
 		return token;
 	}
 	public String getPassword() {
-		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "@string/salt", true);
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
 		String password = secureDataHandler.getString("@string/str_password");
+		Log.i(TAG, "got password: " + password);
 		return password;
 	}
 	public String getEmail() {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		String email = secureDataHandler.getString("@string/str_email");
+		/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		String email = dataGetter.getString("@string/str_email", null);
+		String email = dataGetter.getString("@string/str_email", null);*/
+		Log.i(TAG, "got email: " + email);
 		return email;
 	}
 	public boolean getBolIsLoggedIn() {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		String strbol = secureDataHandler.getString("@string/str_bolIsLoggedIn");
+		if (strbol == null) {
+			setBolIsLoggedIn(false);
+			return false;
+		}
+		boolean bol;
+		if (strbol.equals("0")) {
+			bol = false;
+		} else {
+			bol = true;
+		}/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		boolean bol = dataGetter.getBoolean("@string/str_bolIsLoggedIn", false);
+		boolean bol = dataGetter.getBoolean("@string/str_bolIsLoggedIn", false);*/
+		Log.i(TAG, "gotbolLoggedin: " + bol);
 		return bol;
 	}
 	public boolean getBolIsRegisteredForNotifications() {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		String strbol = secureDataHandler.getString("@string/str_bolIsRegisteredForNotifications");
+		boolean bol;
+		if (strbol == null) {
+			setBolIsRegisteredForNotifications(false);
+			return false;
+		}
+			
+		if (strbol.equals("0")) {
+			bol = false;
+		} else {
+			bol = true;
+		}/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		boolean bol = dataGetter.getBoolean("@string/str_bolIsRegisteredForNotifications", false);
+		boolean bol = dataGetter.getBoolean("@string/str_bolIsRegisteredForNotifications", false);*/
+		Log.i(TAG, "got bolRegistered: " + bol);
 		return bol;
 	}
 	public void setToken(String token) {
+		
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		secureDataHandler.put("@string/str_token", token);
+		/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor dataSetter = dataGetter.edit();
-		dataSetter.putString("@string/str_token", null);
-		dataSetter.commit();
+		dataSetter.putString("@string/str_token", token);
+		dataSetter.commit();*/
+		Log.i(TAG, "set Token: "+ token);
+		
 	}
 	public void setPassword(String password) {
-		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", "@string/salt", true);
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
 		secureDataHandler.put("@string/str_password", password);
+		Log.i(TAG, "set password: " + password);
 	}
 	public void setEmail(String email) {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		secureDataHandler.put("@string/str_email", email);
+		/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor dataSetter = dataGetter.edit();
 		dataSetter.putString("@string/str_email", email);
-		dataSetter.commit();
+		dataSetter.commit();*/
+		Log.i(TAG, "set email: "+ email);
 	}
 	public void setBolIsLoggedIn(boolean bol) {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		if (bol) {
+			secureDataHandler.put("@string/str_bolIsLoggedIn", "1");
+		} else {
+			secureDataHandler.put("@string/str_bolIsLoggedIn", "0");
+		}
+		/*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor dataSetter = dataGetter.edit();
 		dataSetter.putBoolean("str_bolIsLoggedIn", bol);
-		dataSetter.commit();
+		dataSetter.commit();*/
+		Log.i(TAG, "set bolLoggedIn: "+ bol);
 	}
 	public void setBolIsRegisteredForNotifications(boolean bol) {
+		SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		if (bol) {
+			secureDataHandler.put("@string/str_bolIsRegisteredForNotifications", "1");
+		} else {
+			secureDataHandler.put("@string/str_bolIsRegisteredForNotifications", "0");
+		} /*
 		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor dataSetter = dataGetter.edit();
 		dataSetter.putBoolean("str_bolIsRegisteredForNotifications", bol);
-		dataSetter.commit();
+		dataSetter.commit();*/
+		Log.i(TAG, "set bolRegistered: " + bol);
 	}
 	
 	/**
@@ -368,5 +431,8 @@ public class ActivityMaster extends ActionBarActivity {
 	        }
 	    }.execute(null, null, null);
 	}
+	
+	
+	
 	
 }

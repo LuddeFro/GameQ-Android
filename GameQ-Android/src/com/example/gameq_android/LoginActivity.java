@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -40,6 +41,11 @@ public class LoginActivity extends ActivityMaster{
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
+	
+	private static final String alt0 = "0";
+	private static final String alt1 = "1";
+	private static final String alt2 = "2";
+	private static final String altx = "error";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +88,8 @@ public class LoginActivity extends ActivityMaster{
 		
 		// attempt login instantaneously if intent extras != null
 		Intent intent = getIntent();
-		String email = intent.getStringExtra("@string/str_email");
-		String password = intent.getStringExtra("@string/str_password");
+		String email = intent.getStringExtra(getResources().getString(R.string.str_email));
+		String password = intent.getStringExtra(getResources().getString(R.string.str_email));
 		if (!(email == null || password == null)) {
 			
 			mEmailView = (EditText) findViewById(R.id.email);
@@ -94,6 +100,8 @@ public class LoginActivity extends ActivityMaster{
 			
 			attemptLogin();
 		} else {
+			mEmailView = (EditText) findViewById(R.id.email);
+			mPasswordView = (EditText) findViewById(R.id.password);
 			//do nothing, one value is null
 		}
 				
@@ -216,15 +224,15 @@ public class LoginActivity extends ActivityMaster{
 		protected Boolean doInBackground(Void... params) {
 			String loginString = connectionsHandler.postLogin(mEmail, mPassword);
 			
-			if (loginString.equals("@string/alt1")) { //
-				return true;
-			} else if (loginString.equals("@string/alt0")) { //mismatch info
-				return false;
-			} else if (loginString.equals("@string/altx")) { //connection error 
-				cancel(true);
-				return false;
-			} else if (loginString.equals(null)) { // error occurred
+			if (loginString == null) {
 				cancel(false);
+				return false;
+			} else if (loginString.equals(alt1)) { //
+				return true;
+			} else if (loginString.equals(alt0)) { //mismatch info
+				return false;
+			} else if (loginString.equals(altx)) { //connection error 
+				cancel(true);
 				return false;
 			} else { //should be unreachableunreachable
 				return false;
@@ -239,10 +247,13 @@ public class LoginActivity extends ActivityMaster{
 
 			if (success) {
 				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-				intent.putExtra("@string/str_fromLogin", "yes");
+				intent.putExtra(getResources().getString(R.string.str_fromLogin), "yes");
 				setEmail(mEmail);
+				Log.i(TAG, "setting email:" + mEmail);
 				setPassword(mPassword);
+				Log.i(TAG, "setting password:" + mPassword);
 				setBolIsLoggedIn(true);
+				Log.i(TAG, "setting email: true");
 				startActivity(intent);
 				finish();
 			} else {
