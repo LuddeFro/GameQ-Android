@@ -23,14 +23,10 @@ public class DummyContent {
 	 */
 	public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-	static {
-		// Add 3 sample items.
-		addItem(new DummyItem("1", "luddesdator", "is online on Heroes of Newerth", 1));
-		addItem(new DummyItem("2", "sebbesdator", "is currently in a Dota 2 match", 2));
-		addItem(new DummyItem("3", "oskarsdator", "is not gaming at the moment", 0));
-	}
-
-	private static void addItem(DummyItem item) {
+	
+	public static void addItem(String id, String deviceName, String statusText, int status) {
+		ITEMS.clear();
+		DummyItem item = new DummyItem("id", deviceName, statusText, status);
 		ITEMS.add(item);
 		ITEM_MAP.put(item.id, item);
 	}

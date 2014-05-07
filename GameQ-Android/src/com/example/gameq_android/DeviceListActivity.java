@@ -41,11 +41,14 @@ public class DeviceListActivity extends FragmentActivity implements
 			// res/values-sw600dp). If this view is present, then the
 			// activity should be in two-pane mode.
 			mTwoPane = true;
-
+			
+			
+			/* not in this app vvv
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
 			((DeviceListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.device_list)).setActivateOnItemClick(true);
+					*/
 		}
 
 		// TODO: If exposing deep links into your app, handle intents here.
@@ -71,11 +74,13 @@ public class DeviceListActivity extends FragmentActivity implements
 					.replace(R.id.device_detail_container, fragment).commit();
 
 		} else {
+			//In single-pane mode, do nothing
+			/*
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, DeviceDetailActivity.class);
 			detailIntent.putExtra(DeviceDetailFragment.ARG_ITEM_ID, id);
-			startActivity(detailIntent);
+			startActivity(detailIntent);*/
 		}
 	}
 }

@@ -6,23 +6,22 @@
     tools:context="com.example.gameq_android.SettingsActivity"
     tools:ignore="MergeRootFrame" >
 
-    <ToggleButton
-        android:id="@+id/toggleButton1"
+    <TextView
+        android:id="@+id/textView1Settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="178dp"
-        android:text="@string/dummy" 
-        android:onClick="toggleNotifications" />
+        android:layout_marginTop="150dp"
+        android:text="@string/str_toggle_notifications_on" />
 
-    <TextView
-        android:id="@+id/textView1"
+    <Switch
+        android:id="@+id/switch1Settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/toggleButton1"
+        android:layout_below="@+id/textView1Settings"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="56dp"
-        android:text="@string/str_toggle_notifications_on" />
+        android:layout_marginTop="14dp"
+        android:text="" />
 
 </RelativeLayout>

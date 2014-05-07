@@ -57,7 +57,7 @@ public class DeviceDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			RelativeLayout rel = ((RelativeLayout) rootView.findViewById(R.id.device_detail));
-			ImageView iv = (ImageView)rel.findViewWithTag("@string/imgStatus");
+			ImageView iv = (ImageView)rel.findViewWithTag("imgStatus");
 			switch (mItem.status) {
 				case 0:
 					iv.setImageResource(R.drawable.red_light);
@@ -78,8 +78,8 @@ public class DeviceDetailFragment extends Fragment {
 					iv.setImageResource(R.drawable.blue_light);
 					break;
 			}
-			TextView tv1 = (TextView)rel.findViewWithTag("@string/txtStatusText");
-			TextView tv2 = (TextView)rel.findViewWithTag("@string/txtDeviceName");
+			TextView tv1 = (TextView)rel.findViewWithTag("txtStatusText");
+			TextView tv2 = (TextView)rel.findViewWithTag("txtDeviceName");
 			tv1.setText(mItem.statusText);
 			tv2.setText(mItem.deviceName);
 			

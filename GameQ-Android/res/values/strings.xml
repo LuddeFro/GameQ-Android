@@ -36,4 +36,10 @@
 	<string name="txtDeviceName">DeviceName</string>
 	<string name="imgStatus">Status Image</string>
 	
+	<string name="status0">Is not currently gaming</string>
+	<string name="status1">Is currently online on</string>
+	<string name="status2">Is currently in a game of</string>
+	<string name="status3">Is not using GameQ</string>
+	<string name="status4">Error, probably software version related</string>
+	
 </resources>

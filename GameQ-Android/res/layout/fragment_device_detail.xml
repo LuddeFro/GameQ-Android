@@ -7,26 +7,15 @@
     android:padding="16dp"
     tools:context="com.example.gameq_android.DeviceDetailFragment" >
 
-    <ImageView
-        android:id="@+id/imgStatus"
-        android:tag="imgStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/blue_light" 
-        android:contentDescription="@string/imgStatus" />
-
     <TextView
         android:id="@+id/txtDeviceName"
-        android:tag="txtDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imgStatus"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/imgStatus" />
+        android:gravity="center"
+        android:tag="txtDeviceName" />
 
     <TextView
         android:id="@+id/txtStatusText"
@@ -35,7 +24,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/imgStatus"
-        android:layout_marginTop="42dp" />
+        android:layout_below="@+id/txtDeviceName"
+        android:gravity="center" />
+
+    <ImageView
+        android:id="@+id/imgStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:contentDescription="@string/imgStatus"
+        android:src="@drawable/blue_light"
+        android:tag="imgStatus" />
 
 </RelativeLayout>

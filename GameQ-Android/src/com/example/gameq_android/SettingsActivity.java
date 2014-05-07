@@ -1,18 +1,27 @@
 package com.example.gameq_android;
 
+import java.io.IOException;
 import java.security.MessageDigest;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Switch;
 
 public class SettingsActivity extends ActivityMaster {
 
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,6 +31,15 @@ public class SettingsActivity extends ActivityMaster {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		Switch notSwitch = (Switch)  findViewById(R.id.switch1Settings); 
+		OnCheckedChangeListener listenerNots = new OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		        setBolIsRegisteredForNotifications(isChecked);
+		    }
+		};
+		notSwitch.setOnCheckedChangeListener(listenerNots);
+		
+		
 	}
 
 	@Override
@@ -51,13 +69,8 @@ public class SettingsActivity extends ActivityMaster {
 		}
 	}
 	
-	public void toggleNotifications(View view) {
-		//init DataHandlers
-		SharedPreferences dataGetter = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor dataSetter = dataGetter.edit();
-		
-		//TODO toggles notifications on / off
-	}
+	
+	
 	
 
 }

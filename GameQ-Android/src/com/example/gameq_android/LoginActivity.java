@@ -255,6 +255,10 @@ public class LoginActivity extends ActivityMaster{
 				setBolIsLoggedIn(true);
 				Log.i(TAG, "setting email: true");
 				startActivity(intent);
+				String token = getToken();
+				if (token != null) {
+					connectionsHandler.postToken(getToken(), mEmail);
+				}
 				finish();
 			} else {
 				mPasswordView

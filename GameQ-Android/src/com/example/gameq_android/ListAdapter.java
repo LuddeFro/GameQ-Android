@@ -67,23 +67,23 @@ public class ListAdapter extends ArrayAdapter<String> {
 	    switch (codeStatus) {
 		case 0:
 			imageView.setImageResource(R.drawable.red_light);
-			status = "Is not currently gaming";
+			status = getContext().getResources().getString(R.string.status0);
 			break;
 		case 1:
 			imageView.setImageResource(R.drawable.yellow_light);
-			status = "Is currently online on " + game;
+			status = getContext().getResources().getString(R.string.status1) + " "+ game;
 			break;
 		case 2:
 			imageView.setImageResource(R.drawable.green_light);
-			status = "Is currently in a game of " + game;
+			status = getContext().getResources().getString(R.string.status2) + " " + game;
 			break;
 		case 4:
 			imageView.setImageResource(R.drawable.grey_light);
-			status = "Is not using GameQ";
+			status = getContext().getResources().getString(R.string.status3);
 			break;				
 		default:
 			imageView.setImageResource(R.drawable.blue_light);
-			status = "Error, probably software version related";
+			status = getContext().getResources().getString(R.string.status4);
 			break;
     }
 	    statusTextView.setText(status);

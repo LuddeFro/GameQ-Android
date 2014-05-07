@@ -10,7 +10,9 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.gameq_android.LoginActivity.UserLoginTask;
 import com.example.gameq_android.dummy.DummyContent;
@@ -160,6 +162,26 @@ public class DeviceListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
+		TextView statusTextView = (TextView) view.findViewById(R.id.secondLine);
+	    TextView deviceTextView = (TextView) view.findViewById(R.id.firstLine);
+	    int status;
+	    if (statusTextView == null)
+	    	return;
+	    if (statusTextView.getText() == null)
+	    	return;
+	    String statusString = statusTextView.getText().toString();
+	    if (statusString.contains(getResources().getString(R.string.status0))) {
+	    	status = 0;
+	    } else if (statusString.contains(getResources().getString(R.string.status1))) {
+	    	status = 1;
+	    } else if (statusString.contains(getResources().getString(R.string.status2))) {
+	    	status = 2;
+	    } else if (statusString.contains(getResources().getString(R.string.status3))) {
+	    	status = 3;
+	    } else {
+	    	status = 4;
+	    }
+		DummyContent.addItem("" + position, deviceTextView.getText().toString(), statusString, status);
 		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
 	}
 

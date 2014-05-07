@@ -225,20 +225,24 @@ public class ConnectionHandler {
 	            }
 	            
 	            response = response.substring(2);
-	            String [] deviceArray = new String[items];
+	            String[] deviceArray = new String[items];
 	            for (int i = 0; i<items; i++) {
-	            	int len = Integer.parseInt(response.substring(0,  2));
-	                response = response.substring(2);
-	                String itemString = response.substring(0,  len+4);
-	                System.out.println(itemString);
-	                deviceArray[1] = itemString;
-	                
-	                if (i == (items-1)) {
-	                    response = null;
-	                }
-	                else {
-	                    response = response.substring(len + 4);
-	                }
+	            	try {
+	            		int len = Integer.parseInt(response.substring(0,  2));
+		                response = response.substring(2);
+		                String itemString = response.substring(0,  len+4);
+		                System.out.println(itemString);
+		                deviceArray[i] = itemString;
+		                
+		                if (i == (items-1)) {
+		                    response = null;
+		                }
+		                else {
+		                    response = response.substring(len + 4);
+		                }
+	            	} catch(IndexOutOfBoundsException e) {
+	            		alert("An error occurred trying to retrieve your devices, refresh the list to try again");
+	            	} 
 	            }
 	            String backToString = deviceArray[0];
 	            for (int i = 1; i<items; i++) {
@@ -255,7 +259,7 @@ public class ConnectionHandler {
 		// if sign in was successful
 	    if (response.equals("sign in success"))
 	    {
-	    	parentActivity.setConnected();
+	    	//parentActivity.setConnected();
 	        return alt1;
 	    }
 	    
@@ -272,7 +276,7 @@ public class ConnectionHandler {
 	        if (!disconnected)
 	        {
 	            //if you logged out manually
-	            parentActivity.setDisconnected();
+	            //parentActivity.setDisconnected();
 	            return alt1;
 	        }
 	        else {
@@ -299,7 +303,7 @@ public class ConnectionHandler {
 	    	//session was broken
 	        disconnected = true;
 	        parentActivity.logout(null);
-	        parentActivity.setDisconnected();
+	        //parentActivity.setDisconnected();
 	       
 	        alert("You were disconnected from the server, check your connection and try reconnecting!");
 	        
@@ -311,7 +315,7 @@ public class ConnectionHandler {
 	        //should be unreachable, disconnect the bastard!
 	        disconnected = true;
 	        parentActivity.logout(null);
-	        parentActivity.setDisconnected();
+	        //parentActivity.setDisconnected();
 	        
 	        
 	        // mobile alert

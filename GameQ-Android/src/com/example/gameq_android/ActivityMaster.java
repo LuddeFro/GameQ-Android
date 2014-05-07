@@ -30,7 +30,7 @@ public class ActivityMaster extends ActionBarActivity {
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
+    protected static final String PROPERTY_APP_VERSION = "appVersion";
     private final Activity thisActivity = this;
     protected Dialog dialog;
     private static final String SALT = "iuyavos32bdf83ika";
@@ -163,13 +163,7 @@ public class ActivityMaster extends ActionBarActivity {
 	}
 	
 	
-	public void setConnected() {
-		//TODO
-		//will only ever be called in LoginActivity but requires definition here
-	}
-	public void setDisconnected() {
-		//TODO
-	}
+	
 	
 	
 	

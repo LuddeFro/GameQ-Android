@@ -18,6 +18,8 @@ public class GcmIntentService extends IntentService {
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
     static final String TAG = "GameQ-Android";
+
+    private static final String SALT = "iuyavos32bdf83ika";
     
     public GcmIntentService() {
         super("GcmIntentService");
@@ -85,21 +87,36 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String msg) {
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+    	
+    	
+    	SecurePreferences secureDataHandler = new SecurePreferences(getBaseContext(), "securePrefs", SALT, true);
+		String strbol = secureDataHandler.getString("@string/str_bolIsRegisteredForNotifications");
+		boolean bol;
+		if (strbol == null) {
+			bol = false;
+			secureDataHandler.put("@string/str_bolIsRegisteredForNotifications", "0");
+		} else if (strbol.equals("0")) {
+			bol = false;
+		} else {
+			bol = true;
+		}
+		if (bol) {
+			mNotificationManager = (NotificationManager)
+	                this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+	        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+	                new Intent(this, MainActivity.class), 0);
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-        .setSmallIcon(R.drawable.ic_stat_gcm)
-        .setContentTitle("GCM Notification")
-        .setStyle(new NotificationCompat.BigTextStyle()
-        .bigText(msg))
-        .setContentText(msg);
+	        NotificationCompat.Builder mBuilder =
+	                new NotificationCompat.Builder(this)
+	        .setSmallIcon(R.drawable.ic_stat_gcm)
+	        .setContentTitle("GCM Notification")
+	        .setStyle(new NotificationCompat.BigTextStyle()
+	        .bigText(msg))
+	        .setContentText(msg);
 
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+	        mBuilder.setContentIntent(contentIntent);
+	        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+		} 
     }
 }
