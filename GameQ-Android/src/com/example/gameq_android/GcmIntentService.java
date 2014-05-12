@@ -1,10 +1,13 @@
 package com.example.gameq_android;
 
+import android.app.AlertDialog;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -28,16 +31,23 @@ public class GcmIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+        //GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
-        String messageType = gcm.getMessageType(intent);
+        
+        //String messageType = gcm.getMessageType(intent);
 
+        Log.i(TAG, "PUSH RECEIVED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        
+        
+        
         if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
         	/**
         	 * code from google, Server doesn't recognize types of messages
         	 * but sends a message to be displayed (plain and simple). 
         	 */
+        	Log.i(TAG, "extras is not empty");
             /*
              * Filter messages based on message type. Since it is likely that GCM
              * will be extended in the future with new message types, just ignore
@@ -77,7 +87,11 @@ public class GcmIntentService extends IntentService {
         	 *  	message:messageHere
         	 *  }
         	 */
+        	
+        	Log.i(TAG, "message: " + extras.getString("message"));
         	sendNotification(extras.getString("message"));
+        } else {
+        	Log.i(TAG, "extras is empty");
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -101,6 +115,7 @@ public class GcmIntentService extends IntentService {
 			bol = true;
 		}
 		if (bol) {
+			Log.i(TAG, "is registered for notifications!!!");
 			mNotificationManager = (NotificationManager)
 	                this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -110,13 +125,25 @@ public class GcmIntentService extends IntentService {
 	        NotificationCompat.Builder mBuilder =
 	                new NotificationCompat.Builder(this)
 	        .setSmallIcon(R.drawable.ic_stat_gcm)
-	        .setContentTitle("GCM Notification")
+	        .setContentTitle("GameQ Notification")
 	        .setStyle(new NotificationCompat.BigTextStyle()
+	     // Vibrate if vibrate is enabled
 	        .bigText(msg))
 	        .setContentText(msg);
+	        mBuilder.setVibrate(new long[] { 1000, 1000});
+	        mBuilder.setSound(Uri.parse(""));
 
 	        mBuilder.setContentIntent(contentIntent);
 	        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+	        
+	        
+	        Intent myIntent = new Intent(getBaseContext().getApplicationContext(), MainActivity.class);
+	        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        Bundle bundle = new Bundle();
+	        bundle.putString("message", msg);
+	        myIntent.putExtras(bundle);
+	        getBaseContext().getApplicationContext().startActivity(myIntent);
+	        
 		} 
     }
 }

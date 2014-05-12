@@ -81,7 +81,8 @@ public class ActivityMaster extends ActionBarActivity {
 	
 	@Override
 	protected void onStop() {
-		dialog.dismiss();
+		if (dialog != null)
+			dialog.dismiss();
 		super.onStop();
 	}
 	
@@ -119,7 +120,25 @@ public class ActivityMaster extends ActionBarActivity {
 	}
 	
 	public void logout(View view) {
-		connectionsHandler.postLogout();
+		
+		
+		
+		
+		new AsyncTask<Void, Void, String>() {
+	        @Override
+	        protected String doInBackground(Void... params) {
+	            String msg = "";
+	            	connectionsHandler.postLogout();
+	            return msg;
+	        }
+
+	        @Override
+	        protected void onPostExecute(String msg) {
+	            
+	        }
+	    }.execute(null, null, null);
+	    
+	    
 		
 		setPassword(null);
 		setEmail(null);

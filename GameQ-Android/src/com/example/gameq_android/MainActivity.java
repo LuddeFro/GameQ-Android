@@ -23,6 +23,7 @@ public class MainActivity extends ActivityMaster {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		String fromLogin = intent.getStringExtra(getResources().getString(R.string.str_fromLogin));
+		String message = intent.getStringExtra("message");
 		Log.i(TAG, "Main being shown ------------------------");
 		if (fromLogin == null) {
 			
@@ -39,13 +40,17 @@ public class MainActivity extends ActivityMaster {
 			}
 		}
 		
+		
 		setContentView(R.layout.activity_main);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
+		if (message != null) {
+			
+			alert(message);
+		}
 		
 		
 		

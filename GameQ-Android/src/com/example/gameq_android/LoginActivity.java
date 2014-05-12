@@ -257,7 +257,21 @@ public class LoginActivity extends ActivityMaster{
 				startActivity(intent);
 				String token = getToken();
 				if (token != null) {
-					connectionsHandler.postToken(getToken(), mEmail);
+					
+					new AsyncTask<Void, Void, String>() {
+				        @Override
+				        protected String doInBackground(Void... params) {
+				            String msg = "";
+				            connectionsHandler.postToken(getToken(), mEmail);
+				            return msg;
+				        }
+
+				        @Override
+				        protected void onPostExecute(String msg) {
+				            
+				        }
+				    }.execute(null, null, null);
+					
 				}
 				finish();
 			} else {
