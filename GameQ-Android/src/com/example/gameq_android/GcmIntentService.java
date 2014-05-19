@@ -1,19 +1,17 @@
 package com.example.gameq_android;
 
-import android.app.AlertDialog;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmIntentService extends IntentService {
 	
@@ -131,10 +129,15 @@ public class GcmIntentService extends IntentService {
 	        .bigText(msg))
 	        .setContentText(msg);
 	        mBuilder.setVibrate(new long[] { 1000, 1000});
-	        mBuilder.setSound(Uri.parse(""));
-
+	        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+	        mBuilder.setSound(uri);
+	        mBuilder.setLights(0xffffffff, 1000, 1000);
 	        mBuilder.setContentIntent(contentIntent);
 	        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+	        
+	        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+	        
+	        
 	        
 	        
 	        Intent myIntent = new Intent(getBaseContext().getApplicationContext(), MainActivity.class);
