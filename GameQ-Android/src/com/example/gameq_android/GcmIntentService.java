@@ -135,7 +135,7 @@ public class GcmIntentService extends IntentService {
 	        mBuilder.setContentIntent(contentIntent);
 	        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 	        
-	        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+	        //PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 	        
 	        
 	        

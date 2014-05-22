@@ -29,7 +29,8 @@ import android.util.Log;
 public class ConnectionHandler {
 	private boolean disconnected;
 	private final String USER_AGENT = "GQAndroid/1.0";
-	private ActivityMaster parentActivity;
+	private DeviceListActivity parentActivity;
+	private ActivityMaster masterActivity;
 	
 	private static final String str_LogoutURL = "logging.php";
 	private static final String str_LoginURL = "signing.php";
@@ -37,7 +38,7 @@ public class ConnectionHandler {
 	private static final String str_UpdateTokenURL = "upAndroidToken.php";
 	private static final String str_RegisterURL = "regging.php";
 	private static final String str_URL = "http://185.2.155.172/GameQ_Server_Code/";
-	
+	private boolean master;
 	
 	private static final String alt0 = "0";
 	private static final String alt1 = "1";
@@ -54,10 +55,19 @@ public class ConnectionHandler {
 	/**
 	 * constructor
 	 */
-	public ConnectionHandler(ActivityMaster parentAct) {
+	public ConnectionHandler(DeviceListActivity parentAct) {
 		parentActivity = parentAct;
 		disconnected = false;
+		master = false;
 		
+	}
+	/**
+	 * constructor
+	 */
+	public ConnectionHandler(ActivityMaster parentAct) {
+		masterActivity = parentAct;
+		disconnected = false;
+		master = true;
 		
 	}
 	/**
@@ -68,7 +78,13 @@ public class ConnectionHandler {
 	}
 	
 	public void postLogout() {
-		String token = parentActivity.getToken();
+		String token;
+		if (master) {
+			token = masterActivity.getToken();
+		} else { 
+			token = parentActivity.getToken();
+		}
+		
 		if (token == null) {
 			return;
 		}
@@ -126,7 +142,6 @@ public class ConnectionHandler {
 	}
 	
 	public void postRegister(String email, String firstname, String lastname, int gender, int yob, String country, String losenord, String secretq, String secret) {
-		Encryptor enc = new Encryptor();
 		losenord = Encryptor.hashSHA256(losenord);
 		String urlParameters = "email=" + email + "&firstname=" + firstname + "&lastname=" + lastname + "&gender=" + gender + "&yob=" + yob + "&country=" + country + "&losenord=" + losenord + "&secretq=" + secretq + "&secret=" + secret;
 		String urlPath = str_RegisterURL;
@@ -302,7 +317,11 @@ public class ConnectionHandler {
 	    {
 	    	//session was broken
 	        disconnected = true;
-	        parentActivity.logout(null);
+	        if (master) {
+				masterActivity.logout(null);
+			} else { 
+		        parentActivity.logout(null);
+			}
 	        //parentActivity.setDisconnected();
 	       
 	        alert("You were disconnected from the server, check your connection and try reconnecting!");
@@ -314,7 +333,11 @@ public class ConnectionHandler {
 	    {
 	        //should be unreachable, disconnect the bastard!
 	        disconnected = true;
-	        parentActivity.logout(null);
+	        if (master) {
+				masterActivity.logout(null);
+			} else { 
+		        parentActivity.logout(null);
+			}
 	        //parentActivity.setDisconnected();
 	        
 	        
@@ -326,36 +349,68 @@ public class ConnectionHandler {
 		return null;
 	}
 	private void alert(final String message) {
-		
-		parentActivity.runOnUiThread(new Runnable()
-		{
-			public void run() 
+		if (master) {
+			masterActivity.runOnUiThread(new Runnable()
 			{
-				
-				
-				AlertDialog.Builder dialog = new AlertDialog.Builder(parentActivity);
-				dialog
-			    .setTitle("GameQ - Alert")
-			    .setMessage(message)
-			    .setCancelable(false)
-			    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int which) { 
-			            dialog.cancel();
-			        }
-			     })/*
-			    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int which) { 
-			            // do nothing
-			        }
-			     })*/
-			    .setIcon(android.R.drawable.ic_dialog_alert)
-			     .show();
-				
-				
-				
-				
-			}
-		});
+				public void run() 
+				{
+					
+					
+					AlertDialog.Builder dialog = new AlertDialog.Builder(masterActivity);
+					dialog
+				    .setTitle("GameQ - Alert")
+				    .setMessage(message)
+				    .setCancelable(false)
+				    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int which) { 
+				            dialog.cancel();
+				        }
+				     })/*
+				    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int which) { 
+				            // do nothing
+				        }
+				     })*/
+				    .setIcon(android.R.drawable.ic_dialog_alert)
+				     .show();
+					
+					
+					
+					
+				}
+			});
+		} else { 
+			parentActivity.runOnUiThread(new Runnable()
+			{
+				public void run() 
+				{
+					
+					
+					AlertDialog.Builder dialog = new AlertDialog.Builder(parentActivity);
+					dialog
+				    .setTitle("GameQ - Alert")
+				    .setMessage(message)
+				    .setCancelable(false)
+				    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int which) { 
+				            dialog.cancel();
+				        }
+				     })/*
+				    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int which) { 
+				            // do nothing
+				        }
+				     })*/
+				    .setIcon(android.R.drawable.ic_dialog_alert)
+				     .show();
+					
+					
+					
+					
+				}
+			});
+		}
+		
 		
 	}
 }

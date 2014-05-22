@@ -246,7 +246,7 @@ public class LoginActivity extends ActivityMaster{
 			showProgress(false);
 
 			if (success) {
-				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				Intent intent = new Intent(LoginActivity.this, DeviceListActivity.class);
 				intent.putExtra(getResources().getString(R.string.str_fromLogin), "yes");
 				setEmail(mEmail);
 				Log.i(TAG, "setting email:" + mEmail);

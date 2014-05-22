@@ -45,7 +45,7 @@ public class ActivityMaster extends ActionBarActivity {
      * Tag used on log messages.
      */
     static final String TAG = "GameQ-Android";
-
+    
 	public ConnectionHandler connectionsHandler;
 	
 	protected void onCreate(Bundle savedInstanceState) {
