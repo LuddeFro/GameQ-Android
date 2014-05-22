@@ -88,12 +88,14 @@ public class ActivityMaster extends ActionBarActivity {
 	
 	@Override
 	protected void onPause() {
+		if (dialog != null)
+			dialog.dismiss();
 		super.onPause();
 	}
 	
 	protected void alert(String message)
 	{
-		new AlertDialog.Builder(this)
+		dialog = new AlertDialog.Builder(this)
 	    .setTitle("GameQ - Alert")
 	    .setMessage(message)
 	    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -107,7 +109,8 @@ public class ActivityMaster extends ActionBarActivity {
 	        }
 	     })*/
 	    .setIcon(android.R.drawable.ic_dialog_alert)
-	     .show();
+	    .create();
+		dialog.show();
 	}
 	
 	
@@ -233,8 +236,8 @@ public class ActivityMaster extends ActionBarActivity {
 		String strbol = secureDataHandler.getString("@string/str_bolIsRegisteredForNotifications");
 		boolean bol;
 		if (strbol == null) {
-			setBolIsRegisteredForNotifications(false);
-			return false;
+			setBolIsRegisteredForNotifications(true);
+			return true;
 		}
 			
 		if (strbol.equals("0")) {

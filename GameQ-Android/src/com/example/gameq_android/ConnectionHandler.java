@@ -141,11 +141,11 @@ public class ConnectionHandler {
 		post(urlParameters, urlPath);
 	}
 	
-	public void postRegister(String email, String firstname, String lastname, int gender, int yob, String country, String losenord, String secretq, String secret) {
+	public String postRegister(String email, String firstname, String lastname, int gender, int yob, String country, String losenord, String secretq, String secret) {
 		losenord = Encryptor.hashSHA256(losenord);
 		String urlParameters = "email=" + email + "&firstname=" + firstname + "&lastname=" + lastname + "&gender=" + gender + "&yob=" + yob + "&country=" + country + "&losenord=" + losenord + "&secretq=" + secretq + "&secret=" + secret;
 		String urlPath = str_RegisterURL;
-		post(urlParameters, urlPath);
+		return post(urlParameters, urlPath);
 	}
 	
 	private String post(String urlParameters, String urlPath) {
@@ -303,7 +303,6 @@ public class ConnectionHandler {
 	    // registration successful
 	    if (response.equals("signing up"))
 	    {
-	        alert("Welcome to GameQ, you should be able to log in immediatley with the password and username you provided");
 	        return alt1;
 	    }
 	    // user already exists, registration failed

@@ -26,12 +26,16 @@ public class SettingsActivity extends ActivityMaster {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-
+		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		Switch notSwitch = (Switch)  findViewById(R.id.switch1Settings); 
+		notSwitch.setChecked(getBolIsRegisteredForNotifications());
+		
+		
+		
 		OnCheckedChangeListener listenerNots = new OnCheckedChangeListener() {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		        setBolIsRegisteredForNotifications(isChecked);

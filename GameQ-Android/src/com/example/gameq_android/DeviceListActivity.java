@@ -190,8 +190,8 @@ public class DeviceListActivity extends FragmentActivity implements
 		String strbol = secureDataHandler.getString("@string/str_bolIsRegisteredForNotifications");
 		boolean bol;
 		if (strbol == null) {
-			setBolIsRegisteredForNotifications(false);
-			return false;
+			setBolIsRegisteredForNotifications(true);
+			return true;
 		}
 			
 		if (strbol.equals("0")) {

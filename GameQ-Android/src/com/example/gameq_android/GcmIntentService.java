@@ -118,7 +118,7 @@ public class GcmIntentService extends IntentService {
 	                this.getSystemService(Context.NOTIFICATION_SERVICE);
 
 	        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-	                new Intent(this, MainActivity.class), 0);
+	                new Intent(this, DeviceListActivity.class), 0);
 
 	        NotificationCompat.Builder mBuilder =
 	                new NotificationCompat.Builder(this)
@@ -140,7 +140,7 @@ public class GcmIntentService extends IntentService {
 	        
 	        
 	        
-	        Intent myIntent = new Intent(getBaseContext().getApplicationContext(), MainActivity.class);
+	        Intent myIntent = new Intent(getBaseContext().getApplicationContext(), DeviceListActivity.class);
 	        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	        Bundle bundle = new Bundle();
 	        bundle.putString("message", msg);
