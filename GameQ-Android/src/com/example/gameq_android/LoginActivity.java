@@ -252,6 +252,10 @@ public class LoginActivity extends ActivityMaster{
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
+		} else if (mPassword.contains("\"") || mPassword.contains("\\")) {
+			mPasswordView.setError(getString(R.string.error_invalid_characters));
+			focusView = mPasswordView;
+			cancel = true;
 		}
 
 		// Check for a valid email address.
@@ -261,6 +265,10 @@ public class LoginActivity extends ActivityMaster{
 			cancel = true;
 		} else if (!mEmail.contains("@")) {
 			mEmailView.setError(getString(R.string.error_invalid_email));
+			focusView = mEmailView;
+			cancel = true;
+		} else if (mEmail.contains("\"") || mEmail.contains("\\")) {
+			mEmailView.setError(getString(R.string.error_invalid_characters));
 			focusView = mEmailView;
 			cancel = true;
 		}
@@ -300,26 +308,70 @@ public class LoginActivity extends ActivityMaster{
 		View focusView = null;
 
 		// Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_field_required));
-			focusView = mPasswordView;
-			cancel = true;
-		} else if (mPassword.length() < 6) {
-			mPasswordView.setError(getString(R.string.error_invalid_password));
-			focusView = mPasswordView;
-			cancel = true;
-		}
+				if (TextUtils.isEmpty(mPassword)) {
+					mPasswordView.setError(getString(R.string.error_field_required));
+					focusView = mPasswordView;
+					cancel = true;
+				} else if (mPassword.length() < 6) {
+					mPasswordView.setError(getString(R.string.error_invalid_password));
+					focusView = mPasswordView;
+					cancel = true;
+				} else if (mPassword.contains("\"") || mPassword.contains("\\")) {
+					mPasswordView.setError(getString(R.string.error_invalid_characters));
+					focusView = mPasswordView;
+					cancel = true;
+				}
 
-		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
-			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
-		}
+				// Check for a valid email address.
+				if (TextUtils.isEmpty(mEmail)) {
+					mEmailView.setError(getString(R.string.error_field_required));
+					focusView = mEmailView;
+					cancel = true;
+				} else if (!mEmail.contains("@")) {
+					mEmailView.setError(getString(R.string.error_invalid_email));
+					focusView = mEmailView;
+					cancel = true;
+				} else if (mEmail.contains("\"") || mEmail.contains("\\")) {
+					mEmailView.setError(getString(R.string.error_invalid_characters));
+					focusView = mEmailView;
+					cancel = true;
+				}
+					
+					// Check for a valid Answer
+					if (TextUtils.isEmpty(mAnswer)) {
+						txtAnswer.setError(getString(R.string.error_field_required));
+						focusView = txtAnswer;
+						cancel = true;
+					} else if (mAnswer.length() < 6) {
+						txtAnswer.setError(getString(R.string.error_invalid_password));
+						focusView = txtAnswer;
+						cancel = true;
+					} else if (mAnswer.contains("\"") || mAnswer.contains("\\")) {
+						txtAnswer.setError(getString(R.string.error_invalid_characters));
+						focusView = txtAnswer;
+						cancel = true;
+					}
+
+					// Check for a valid Question
+					if (TextUtils.isEmpty(mQuestion)) {
+						txtQuestion.setError(getString(R.string.error_field_required));
+						focusView = txtQuestion;
+						cancel = true;
+					}  else if (mQuestion.contains("\"") || mQuestion.contains("\\")) {
+						txtQuestion.setError(getString(R.string.error_invalid_characters));
+						focusView = txtQuestion;
+						cancel = true;
+					}
+						
+					
+					
+					
+					
+					
+					
+					
+					
+					
 		
 		if (TextUtils.isEmpty(mQuestion)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
