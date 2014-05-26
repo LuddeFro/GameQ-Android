@@ -96,9 +96,11 @@ public class DeviceListFragment extends ListFragment {
 		super.onResume();
 
 		
-		mEmail = getEmail();
-		mAuthTask = new PostTask();
-		mAuthTask.execute((Void) null);
+		mEmail = getEmail(); 
+		if (mEmail != null) {
+			mAuthTask = new PostTask();
+			mAuthTask.execute((Void) null);
+		}
 		/*
 		String listString = ((DeviceListActivity) getActivity()).connectionsHandler.postUpdateDraw(email);
 		String[] arrayString =listString.split(":");
@@ -224,7 +226,7 @@ public class DeviceListFragment extends ListFragment {
 		
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			
+			((DeviceListActivity) getActivity()).initiation();
 			String listString = ((DeviceListActivity) getActivity()).connectionsHandler.postUpdateDraw(mEmail);
 			final String[] arrayString = listString.split(":");
 			getActivity().runOnUiThread(new Runnable() {

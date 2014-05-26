@@ -64,11 +64,17 @@ public class DeviceListActivity extends FragmentActivity implements
     //project GameQ by GameQ, only accessible for GameQ under "projects"
     String SENDER_ID = "647277380052";
 	
+    public void initiation() {
+    	if (connectionsHandler == null) {
+        	connectionsHandler = new ConnectionHandler(this);
+    	}
+    }
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		context = getApplicationContext();
-		connectionsHandler = new ConnectionHandler(this);
+		initiation();
 		
 		Intent intent = getIntent();
 		String fromLogin = intent.getStringExtra(getResources().getString(R.string.str_fromLogin));

@@ -68,7 +68,6 @@ public class LoginActivity extends ActivityMaster{
 		txtAnswer = (EditText) findViewById(R.id.txtAnswer);
 		txtAnswer.setTypeface(Typeface.DEFAULT);
 		txtAnswer.setTransformationMethod(new PasswordTransformationMethod());
-		
 		txtQuestion = (EditText) findViewById(R.id.txtQuestion);
 		txtAnswer.setAlpha(0);
 		txtQuestion.setAlpha(0);

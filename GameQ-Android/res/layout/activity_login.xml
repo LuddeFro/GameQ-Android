@@ -31,32 +31,27 @@
 
     <!-- Login form -->
 
-    
-
         <RelativeLayout
+            android:id="@+id/login_form"
             style="@style/LoginFormContainer"
-            android:orientation="vertical" 
-            android:id="@+id/login_form" >
-
-            <Button
-                android:id="@+id/btnBot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/password"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/password"
-                android:text="@string/join_button" />
-
+            android:layout_height="wrap_content"
+            android:background="#222222"
+            android:orientation="vertical" >
+            
             <Button
                 android:id="@+id/sign_in_button"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_above="@+id/btnBot"
-                android:layout_alignLeft="@+id/btnBot"
-                android:layout_alignRight="@+id/btnBot"
+                android:layout_alignLeft="@+id/txtAnswer"
+                android:layout_alignRight="@+id/txtAnswer"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/custom_buttons"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/sign_in_button" />
+                android:text="@string/sign_in_button"
+                android:textColor="#ffffff" />
 
             <EditText
                 android:id="@+id/password"
@@ -71,7 +66,8 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" >
+                android:singleLine="true"
+                android:textColor="#ffffff">
 
                 <requestFocus />
             </EditText>
@@ -89,7 +85,8 @@
                 android:maxEms="10"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:typeface="normal" />
+                android:typeface="normal" 
+                android:textColor="#ffffffff"/>
 
             <EditText
                 android:id="@+id/email"
@@ -102,7 +99,8 @@
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true" 
+                android:textColor="#ffffffff" />
 
             <EditText
                 android:id="@+id/txtAnswer"
@@ -117,7 +115,20 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:typeface="normal" 
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:textColor="#ffffffff"/>
+
+            <Button
+                android:id="@+id/btnBot"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/sign_in_button"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/sign_in_button"
+                android:background="@drawable/custom_buttons"
+                android:text="@string/join_button"
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
 

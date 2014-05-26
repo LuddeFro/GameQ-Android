@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.gameq_android.SettingsActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="#222222">
 
     <TextView
         android:id="@+id/textView1Settings"
@@ -13,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:text="@string/str_toggle_notifications_on" />
+        android:text="@string/str_toggle_notifications_on" 
+        android:textColor="#ffffffff" />
 
     <Switch
         android:id="@+id/switch1Settings"
