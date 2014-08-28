@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.gameq_android.AboutActivity"
+    tools:context="lvf.io.gameq.gameq_android.AboutActivity"
     tools:ignore="MergeRootFrame" 
     android:background="#222222">
 
@@ -12,22 +12,39 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/gameTextView1"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_alignRight="@+id/gameTextView1"
         android:layout_marginBottom="20dp"
         android:background="@drawable/custom_buttons"
         android:text="@string/str_gameq.com" 
         android:textColor="#ffffff" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/gameTextView1"
         android:layout_width="288dp"
         android:layout_height="359dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="@string/str_about_text" 
+        android:textColor="#ffffffff" />
+
+    <Switch
+        android:id="@+id/switch1Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gameTextView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp" />
+
+    <TextView
+        android:id="@+id/textView1Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/switch1Settings"
+        android:layout_centerHorizontal="true"
+        android:text="@string/str_toggle_notifications_on"
         android:textColor="#ffffffff" />
 
 </RelativeLayout>
