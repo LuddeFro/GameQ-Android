@@ -6,13 +6,10 @@
     <string name="title_device_list">Devices</string>
     <string name="title_device_detail">Device Detail</string>
     <string name="title_login">Sign In</string>
-    <string name="str_about_text">GameQ is the first and only App that allows you to leave your computer while queuing for your favourite games!
- 
-No more worrying about bad starts and leaver stats! GameQ checks your queue for you and sends a notification to your smart-phone/tablet when the game starts! 
- 
-Simply download the desktop client from www.gameq.io and install it on your computer. Log on to your GameQ account and let GameQ revolutionize your gaming experience!
- 
-Take a bathroom break, enjoy a pre-game snack or call a friend - GameQ will take care of the rest! </string>
+    <string name="str_about_text">GameQ is the first and only App that allows you to leave your computer while queuing for your favourite games! 
+        No more worrying about bad starts and leaver stats! GameQ checks your queue for you and sends a notification to your smartphone when the game starts! 
+        Simply download and install the desktop client from www.gameq.io. Log on to your GameQ account and let GameQ revolutionize your gaming experience!
+ 		Take a bathroom break, enjoy a pre-game snack or call a friend - GameQ will take care of the rest! </string>
     <string name="title_activity_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="str_settings">Settings</string>
@@ -29,7 +26,9 @@ Take a bathroom break, enjoy a pre-game snack or call a friend - GameQ will take
     <string name="str_bolIsRegisteredForNotifications">bolIsRegisteredForNotifications</string>
     <string name="str_token">token</string>
     <string name="str_fromLogin">fromLogin</string>
-    <string name="str_website">https://www.gameq.io</string>
+    <string name="str_website">http://www.gameq.io</string>
+    <string name="str_facebook">https://www.facebook.com/GameQApp</string>
+    <string name="str_twitter">https://twitter.com/GameQApp</string>
     <string name="sign_in_button">Sign In</string>
     <string name="join_button">Join GameQ</string>
     <string name="cancel_button">Cancel</string>
@@ -105,5 +104,7 @@ Take a bathroom break, enjoy a pre-game snack or call a friend - GameQ will take
     <string name="status_ingame">In a Game</string>
     <string name="status_disconnected">Connect a Computer</string>
     <string name="approx_time">Game starts in:</string>
-
+	<string name="str_Like_Us">Like/Follow us at&#8230;</string>
+	<string name="gameQLogoDescription">GameQ</string>
+	<string name="backgroundDescription">GameQ</string>
 </resources>

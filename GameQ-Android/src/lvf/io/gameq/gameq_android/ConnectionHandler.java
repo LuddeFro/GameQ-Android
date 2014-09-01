@@ -7,21 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.EmptyStackException;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -161,7 +148,17 @@ public class ConnectionHandler {
 		if (returnString == null || returnString.equals(alt0)) {
 			return null;
 		}
-		ConnectionHandler.drawArray = returnString.split(":");
+		String[] tempArray = returnString.split(":");
+		String[] tempArray2;
+		if (tempArray[(tempArray.length - 1)].equals("null")) {
+			tempArray2 = new String[tempArray.length - 1];
+			for (int i = 0; i < tempArray2.length; i++) {
+				tempArray2[i] = tempArray[i];
+			}
+			ConnectionHandler.drawArray = tempArray;
+		} else {
+			ConnectionHandler.drawArray = tempArray;
+		}
 		
 		return returnString;
 	}
@@ -279,7 +276,8 @@ public class ConnectionHandler {
 	            response = response.substring(2);
 	            String[] deviceArray = new String[items];
 	            for (int i = 0; i<items; i++) {
-	            	try {
+	            	
+	            		
 	            		int len = Integer.parseInt(response.substring(0,  2));
 		                response = response.substring(2);
 		                String itemString = response.substring(0,  len+4+14);
@@ -287,14 +285,11 @@ public class ConnectionHandler {
 		                deviceArray[i] = itemString;
 		                
 		                if (i == (items-1)) {
-		                    response = null;
-		                }
-		                else {
+		                    break;
+		                } else {
 		                    response = response.substring(len + 4 + 14);
 		                }
-	            	} catch(IndexOutOfBoundsException e) {
-	            		alert("An error occurred trying to retrieve your devices, refresh the list to try again");
-	            	} 
+	            	
 	            }
 	            String backToString = deviceArray[0];
 	            for (int i = 1; i<items; i++) {

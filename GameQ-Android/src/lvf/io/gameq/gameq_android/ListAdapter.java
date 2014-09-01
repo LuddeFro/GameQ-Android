@@ -32,7 +32,7 @@ public class ListAdapter extends ArrayAdapter<String> {
 	    ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 	    String item = values[position];
 	    Log.i(TAG, "tem: " + item);
-	    if (item.equals(null) || item.length() <= 3) {
+	    if (item.equals(null) || item.length() <= 3 || item.equals("null")) {
 	    	imageView.setImageResource(R.drawable.transparent);
 	    	statusTextView.setText("For info on connecting other devices, visit GameQ.io");
 	    	deviceTextView.setText("No devices detected");
@@ -40,8 +40,19 @@ public class ListAdapter extends ArrayAdapter<String> {
 	    }
 	    String statusCode = item.substring(2, 4);
 	    String gameCode = item.substring(0, 2);
-	    int codeStatus = Integer.parseInt(statusCode);
-	    int codeGame = Integer.parseInt(gameCode);
+	    int codeStatus;
+	    int codeGame;
+	    
+	    try {
+	    	 codeStatus = Integer.parseInt(statusCode);
+		     codeGame = Integer.parseInt(gameCode);
+	    } catch (NumberFormatException e) {
+	    	imageView.setImageResource(R.drawable.transparent);
+	    	statusTextView.setText("For info on connecting other devices, visit GameQ.io");
+	    	deviceTextView.setText("No devices detected");
+	    	return rowView;
+	    }
+	    
 	    String devName = item.substring(4, item.length()-14);
 	    deviceTextView.setText(devName);
 	    

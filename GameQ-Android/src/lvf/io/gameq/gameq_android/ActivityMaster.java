@@ -118,10 +118,7 @@ public class ActivityMaster extends ActionBarActivity {
 	
 	
 	
-	protected void showWebsite(View view) {
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.str_website)));
-		startActivity(browserIntent);
-	}
+	
 	
 	public void logout(View view) {
 		

@@ -7,6 +7,13 @@
     tools:ignore="MergeRootFrame" 
     android:background="#222222">
 
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+            android:src="@drawable/blurred" />
+
     <Button
         android:id="@+id/button1"
         style="?android:attr/borderlessButtonStyle"
@@ -27,16 +34,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="@string/str_about_text" 
+        android:text="@string/str_about_text"
         android:textColor="#ffffffff" />
-
-    <Switch
-        android:id="@+id/switch1Settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gameTextView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp" />
 
     <TextView
         android:id="@+id/textView1Settings"
@@ -46,5 +45,44 @@
         android:layout_centerHorizontal="true"
         android:text="@string/str_toggle_notifications_on"
         android:textColor="#ffffffff" />
+
+    <Switch
+        android:id="@+id/switch1Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lblLikeUs"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:id="@+id/lblLikeUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnFacebook"
+        android:layout_alignLeft="@+id/textView1Settings"
+        android:layout_alignRight="@+id/textView1Settings"
+        android:gravity="center_horizontal"
+        android:text="@string/str_Like_Us"
+        android:textColor="#ffffffff" />
+
+    <Button
+        android:id="@+id/btnTwitter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_above="@+id/button1"
+        android:layout_alignRight="@+id/lblLikeUs"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/tw" />
+
+    <Button
+        android:id="@+id/btnFacebook"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignBaseline="@+id/btnTwitter"
+        android:layout_alignBottom="@+id/btnTwitter"
+        android:layout_alignLeft="@+id/lblLikeUs"
+        android:layout_marginLeft="32dp"
+        android:background="@drawable/fb" />
 
 </RelativeLayout>

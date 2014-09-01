@@ -99,6 +99,7 @@ public class SwipeActivity extends ActivityMaster {
     		//String message = intent.getStringExtra("message");
     	}
 		Log.i(TAG, "Main being shown ------------------------");
+		Log.i(TAG, "Main being shown ----GUSTAFHEJEHEJEHJEHEJEHEJ----");
 		if (fromLogin == null) {
 			
 			boolean bolIsLoggedIn = getBolIsLoggedIn();
@@ -766,11 +767,12 @@ public class SwipeActivity extends ActivityMaster {
 				     @Override
 				     public void run() {
 
-				    	 gameTextView.setText("");
+				    	gameTextView.setText("");
+				    	gameTextView.setAlpha(0);
 						statusTextView.setText(getResources().getString(R.string.status_disconnected));
 						approxTextView.setText("");
 						timeTextView.setText("");
-						statusTextView.setTextColor(Color.parseColor("#707070") );
+						statusTextView.setTextColor(Color.parseColor("#FFFFFF") );
 
 				    }
 				});
@@ -791,6 +793,9 @@ public class SwipeActivity extends ActivityMaster {
 			int game;
 			if (arrayString.length >= 1 && arrayString[0].length() >=18) {
 				for (int i = 0; i < arrayString.length; i++) {
+					if (arrayString[i].equals(null) || arrayString[i].equals("null")) {
+						break;
+					}
 					int tempStatus = Integer.parseInt(arrayString[i].substring(2, 4));
 					long tempQTime = Long.parseLong(arrayString[i].substring(arrayString[i].length()-14));
 					if (tempStatus > j ) {
@@ -824,25 +829,30 @@ public class SwipeActivity extends ActivityMaster {
 			    	 switch (innerGame) {
 						case 0: //none
 							gameTextView.setText("");
+							imageView.setImageResource(R.drawable.transgq);
 							Log.i(TAG, "0");
 							break;
 						case 1: //HoN
 							gameTextView.setText("Heroes of Newerth");
 							Log.i(TAG, "1");
+							imageView.setImageResource(R.drawable.hon);
 							break;
 						
 						case 2: //Dota
 							gameTextView.setText("Dota 2");
+							imageView.setImageResource(R.drawable.dota);
 							Log.i(TAG, "2");
 							break;
 						
 						case 3: //CSGO
 							gameTextView.setText("Counter Strike: Global Offensive");
+							imageView.setImageResource(R.drawable.csgo);
 							Log.i(TAG, "3");
 							break;
 						
 						default: 
 							gameTextView.setText("Unknown Game");
+							imageView.setImageResource(R.drawable.transgq);
 							Log.i(TAG, "default");
 							break;
 						
@@ -850,10 +860,12 @@ public class SwipeActivity extends ActivityMaster {
 					switch (innerStatus) {
 						case 0: //offline
 							gameTextView.setText("");
+							gameTextView.setAlpha(0);
 							statusTextView.setText(getResources().getString(R.string.status_offline));
 							approxTextView.setText("");
 							timeTextView.setText("");
 							statusTextView.setTextColor(Color.parseColor("#cc3f3f") );
+							imageView.setImageResource(R.drawable.transgq);
 							Log.i(TAG, "offline");
 							break;
 						
@@ -861,6 +873,7 @@ public class SwipeActivity extends ActivityMaster {
 							statusTextView.setText(getResources().getString(R.string.status_online));
 							approxTextView.setText("");
 							timeTextView.setText("");
+							gameTextView.setAlpha(1);
 							statusTextView.setTextColor(Color.parseColor("#ffcc00") );
 							Log.i(TAG, "online");
 							break;
@@ -869,24 +882,29 @@ public class SwipeActivity extends ActivityMaster {
 							statusTextView.setText(getResources().getString(R.string.status_ingame));
 							approxTextView.setText("");
 							timeTextView.setText("");
+							gameTextView.setAlpha(1);
 							statusTextView.setTextColor(Color.parseColor("#009d28") );
 							Log.i(TAG, "ingame");
 							break;
 						
 						case 4:  //disconnected
 							gameTextView.setText("");
+							gameTextView.setAlpha(0);
 							statusTextView.setText(getResources().getString(R.string.status_disconnected));
 							approxTextView.setText("");
 							timeTextView.setText("");
-							statusTextView.setTextColor(Color.parseColor("#707070") );
+							statusTextView.setTextColor(Color.parseColor("#FFFFFF") );
+							imageView.setImageResource(R.drawable.transgq);
 							Log.i(TAG, "disced");
 							break;
 						
 						default: 
 							statusTextView.setText("Unknown Status");
+							gameTextView.setAlpha(0);
 							approxTextView.setText("");
 							timeTextView.setText("");
-							statusTextView.setTextColor(Color.parseColor("#707070") );
+							statusTextView.setTextColor(Color.parseColor("#FFFFFF") );
+							imageView.setImageResource(R.drawable.transgq);
 							Log.i(TAG, "unknown");
 							break;
 						

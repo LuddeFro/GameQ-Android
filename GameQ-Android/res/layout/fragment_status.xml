@@ -16,7 +16,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/gameTextView1"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_stat_gcm" />
+        android:src="@drawable/transgq" 
+        android:contentDescription="@string/gameQLogoDescription" />
 
     <TextView
         android:id="@+id/timeTextView1"
@@ -50,7 +51,8 @@
         android:layout_marginTop="31dp"
         android:gravity="center_horizontal"
         android:lines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:background="#60FFFFFF" />
 
     <TextView
         android:id="@+id/statusTextView1"
@@ -62,6 +64,7 @@
         android:layout_marginBottom="17dp"
         android:gravity="center_horizontal"
         android:lines="1"
+        android:background="#60FFFFFF"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
