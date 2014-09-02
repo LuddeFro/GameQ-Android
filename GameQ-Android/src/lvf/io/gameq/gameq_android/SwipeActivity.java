@@ -8,6 +8,8 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.xml.datatype.DatatypeConstants.Field;
+
 import lvf.io.gameq.gameq_android.StatFrag.OnFragmentInteractionListener;
 import lvf.io.gameq.gameq_android.dummy.DummyContent;
 import android.annotation.SuppressLint;
@@ -33,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
@@ -82,6 +85,16 @@ public class SwipeActivity extends ActivityMaster {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+	        ViewConfiguration config = ViewConfiguration.get(this);
+	        java.lang.reflect.Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+	        if(menuKeyField != null) {
+	            menuKeyField.setAccessible(true);
+	            menuKeyField.setBoolean(config, false);
+	        }
+	    } catch (Exception ex) {
+	        // Ignore
+	    }
 		setContentView(R.layout.activity_swipe);
 
 		// Create the adapter that will return a fragment for each of the three
