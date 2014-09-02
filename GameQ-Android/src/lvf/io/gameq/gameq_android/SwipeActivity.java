@@ -114,6 +114,7 @@ public class SwipeActivity extends ActivityMaster {
 				//assume login
 			}
 		}
+		AppRater.app_launched(this);
 
 	}
 	

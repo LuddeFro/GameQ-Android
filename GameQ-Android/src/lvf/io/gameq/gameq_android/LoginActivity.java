@@ -160,6 +160,8 @@ public class LoginActivity extends ActivityMaster{
 			mPasswordView = (EditText) findViewById(R.id.password);
 			//do nothing, one value is null
 		}
+		
+		
 				
 	}
 	
