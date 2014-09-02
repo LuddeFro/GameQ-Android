@@ -21,6 +21,7 @@ public class DummyContent {
 	public static int game;
 	public static int status;
 	public static long qTime;
+	public static int imageNumber;
 	
 	
 	/**

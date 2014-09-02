@@ -28,13 +28,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -729,7 +729,8 @@ public class SwipeActivity extends ActivityMaster {
 		private TextView approxTextView;
 		private TextView timeTextView;
 		private ImageView imageView;
-		
+		private int lastImage;
+		private int lastAlpha;
 		
 		
 		
@@ -767,8 +768,15 @@ public class SwipeActivity extends ActivityMaster {
 				     @Override
 				     public void run() {
 
-				    	gameTextView.setText("");
-				    	gameTextView.setAlpha(0);
+				    	
+						AlphaAnimation anim = new AlphaAnimation(lastAlpha, 0);
+						lastAlpha = 0;
+						anim.setDuration(1000);
+						anim.setStartOffset(0);
+						anim.setFillAfter(true);
+						gameTextView.startAnimation(anim);
+								
+								
 						statusTextView.setText(getResources().getString(R.string.status_disconnected));
 						approxTextView.setText("");
 						timeTextView.setText("");
@@ -826,27 +834,27 @@ public class SwipeActivity extends ActivityMaster {
 			    	 int innerGame = DummyContent.game;
 			    	 int innerStatus = DummyContent.status;
 			    	 long innerqTime = DummyContent.qTime;
+			    	 int newImage = innerGame;
 			    	 switch (innerGame) {
 						case 0: //none
-							gameTextView.setText("");
-							imageView.setImageResource(R.drawable.transgq);
+							
 							Log.i(TAG, "0");
 							break;
 						case 1: //HoN
 							gameTextView.setText("Heroes of Newerth");
+							
 							Log.i(TAG, "1");
-							imageView.setImageResource(R.drawable.hon);
 							break;
 						
 						case 2: //Dota
 							gameTextView.setText("Dota 2");
-							imageView.setImageResource(R.drawable.dota);
+							
 							Log.i(TAG, "2");
 							break;
 						
 						case 3: //CSGO
 							gameTextView.setText("Counter Strike: Global Offensive");
-							imageView.setImageResource(R.drawable.csgo);
+							
 							Log.i(TAG, "3");
 							break;
 						
@@ -859,13 +867,11 @@ public class SwipeActivity extends ActivityMaster {
 					}
 					switch (innerStatus) {
 						case 0: //offline
-							gameTextView.setText("");
-							gameTextView.setAlpha(0);
 							statusTextView.setText(getResources().getString(R.string.status_offline));
 							approxTextView.setText("");
 							timeTextView.setText("");
-							statusTextView.setTextColor(Color.parseColor("#cc3f3f") );
-							imageView.setImageResource(R.drawable.transgq);
+							newImage = 0;
+							
 							Log.i(TAG, "offline");
 							break;
 						
@@ -873,8 +879,6 @@ public class SwipeActivity extends ActivityMaster {
 							statusTextView.setText(getResources().getString(R.string.status_online));
 							approxTextView.setText("");
 							timeTextView.setText("");
-							gameTextView.setAlpha(1);
-							statusTextView.setTextColor(Color.parseColor("#ffcc00") );
 							Log.i(TAG, "online");
 							break;
 						
@@ -882,33 +886,99 @@ public class SwipeActivity extends ActivityMaster {
 							statusTextView.setText(getResources().getString(R.string.status_ingame));
 							approxTextView.setText("");
 							timeTextView.setText("");
-							gameTextView.setAlpha(1);
-							statusTextView.setTextColor(Color.parseColor("#009d28") );
 							Log.i(TAG, "ingame");
 							break;
 						
 						case 4:  //disconnected
-							gameTextView.setText("");
-							gameTextView.setAlpha(0);
 							statusTextView.setText(getResources().getString(R.string.status_disconnected));
 							approxTextView.setText("");
 							timeTextView.setText("");
-							statusTextView.setTextColor(Color.parseColor("#FFFFFF") );
-							imageView.setImageResource(R.drawable.transgq);
+							newImage = 0;
 							Log.i(TAG, "disced");
 							break;
 						
 						default: 
 							statusTextView.setText("Unknown Status");
-							gameTextView.setAlpha(0);
 							approxTextView.setText("");
 							timeTextView.setText("");
-							statusTextView.setTextColor(Color.parseColor("#FFFFFF") );
-							imageView.setImageResource(R.drawable.transgq);
+							newImage = 0;
 							Log.i(TAG, "unknown");
 							break;
 						
 					}
+					
+					
+					if (innerStatus != 0 && innerStatus < 4 && lastAlpha == 0) {
+						AlphaAnimation animation1 = new AlphaAnimation(lastAlpha, 1);
+						animation1.setDuration(1000);
+						animation1.setStartOffset(0);
+						animation1.setFillAfter(true);
+						gameTextView.startAnimation(animation1);
+						lastAlpha = 1;
+					} else if (lastAlpha == 1  && (innerStatus == 0 || innerStatus > 3)) {
+						AlphaAnimation animation1 = new AlphaAnimation(lastAlpha, 0);
+						animation1.setDuration(1000);
+						animation1.setStartOffset(0);
+						animation1.setFillAfter(true);
+						gameTextView.startAnimation(animation1);
+						lastAlpha = 0;
+					}
+					
+					if (lastImage == newImage ) {
+						return;
+					} else {
+						lastImage = newImage;
+						DummyContent.imageNumber = newImage;
+						AlphaAnimation animation2 = new AlphaAnimation(1, 0);
+						animation2.setDuration(1000);
+						animation2.setStartOffset(0);
+						animation2.setFillAfter(true);
+						imageView.startAnimation(animation2);
+						
+						Timer aTimer = new Timer();
+						aTimer.schedule(new TimerTask()
+						    {
+						        public void run()
+						        {
+						        	
+						        	runOnUiThread(new Runnable() {
+									     @Override
+									     public void run() {
+									    	 switch (DummyContent.imageNumber) {
+												case 0: //None
+													imageView.setImageResource(R.drawable.transgq);
+													break;
+											
+												case 1:  //Hon
+													imageView.setImageResource(R.drawable.hon);
+													break;
+											
+												case 2:  //Dota
+													imageView.setImageResource(R.drawable.dota);
+													break;
+											
+												case 3:  //CSGO
+													imageView.setImageResource(R.drawable.csgo);
+													break;
+												
+												default: 
+													imageView.setImageResource(R.drawable.transgq);
+													break;
+											
+								        	}
+								        	AlphaAnimation animation3 = new AlphaAnimation(0, 1);
+											animation3.setDuration(1000);
+											animation3.setStartOffset(0);
+											animation3.setFillAfter(true);
+											imageView.startAnimation(animation3);
+									     }
+						        	});
+						        	
+						        }
+						    }, 1000);
+						
+					}
+					
 					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 					dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
 					Date date = new Date();
