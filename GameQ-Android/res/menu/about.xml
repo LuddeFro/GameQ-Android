@@ -3,25 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.gameq_android.AboutActivity" >
 
-    
-    
-    <item android:id="@+id/action_devices"
-        android:orderInCategory="100"
-          android:title="@string/str_devices"
-          android:showAsAction="never" />
-    
-    <item android:id="@+id/action_about"
-        android:orderInCategory="101"
-          android:title="@string/str_about"
-          android:showAsAction="never" 
-          android:enabled="false" />
-    
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="102"
-        android:title="@string/str_settings"
-        app:showAsAction="never"/>
-    
     <item android:id="@+id/action_logout"
         android:orderInCategory="103"
           android:title="@string/str_logout"
