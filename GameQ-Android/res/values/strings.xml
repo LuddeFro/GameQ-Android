@@ -44,8 +44,9 @@
     <string name="status0">Is not currently gaming</string>
     <string name="status1">Is currently online on</string>
     <string name="status2">Is currently in a game of</string>
-    <string name="status3">Is not using GameQ</string>
-    <string name="status4">Error, probably software version related</string>
+    <string name="status3">Is not tracking queues</string>
+    <string name="status4">Is not using GameQ</string>
+    <string name="statusx">Error, probably software version related</string>
     <string name="prompt_answer">Secret / Answer</string>
     <string name="prompt_question">Secret Question / Hint</string>
     <string name="error_invalid_characters">This field contains invalid characters</string>
@@ -101,6 +102,7 @@
     
     <string name="status_offline">Not Gaming</string>
     <string name="status_online">Online</string>
+    <string name="status_nottracking">Not Tracking Queues</string>
     <string name="status_ingame">In a Game</string>
     <string name="status_disconnected">Connect a Computer</string>
     <string name="approx_time">Game starts in:</string>

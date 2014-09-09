@@ -871,6 +871,24 @@ public class SwipeActivity extends ActivityMaster {
 							
 							Log.i(TAG, "3");
 							break;
+						case 4:
+							gameTextView.setText("Smite");
+							break;
+						case 5:
+							gameTextView.setText("Strife");
+							break;	
+						case 6:
+							gameTextView.setText("StarCraft II");
+							break;	
+						case 7:
+							gameTextView.setText("Team Fortress 2");
+							break;	
+						case 8:
+							gameTextView.setText("Heroes of the Storm");
+							break;	
+						case 9:
+							gameTextView.setText("Hearthstone");
+							break;	
 						
 						default: 
 							gameTextView.setText("Unknown Game");
@@ -902,7 +920,15 @@ public class SwipeActivity extends ActivityMaster {
 							timeTextView.setText("");
 							Log.i(TAG, "ingame");
 							break;
-						
+							
+						case 3:  //not tracking
+							statusTextView.setText(getResources().getString(R.string.status_nottracking));
+							approxTextView.setText("");
+							timeTextView.setText("");
+							newImage = 0;
+							Log.i(TAG, "disced");
+							break;
+							
 						case 4:  //disconnected
 							statusTextView.setText(getResources().getString(R.string.status_disconnected));
 							approxTextView.setText("");
@@ -974,6 +1000,26 @@ public class SwipeActivity extends ActivityMaster {
 												case 3:  //CSGO
 													imageView.setImageResource(R.drawable.csgo);
 													break;
+												case 4:  //smite
+													imageView.setImageResource(R.drawable.smitelogo);
+													break;
+												case 5:  //strife
+													imageView.setImageResource(R.drawable.strifelogo);
+													break;
+												case 6:  //sc2
+													imageView.setImageResource(R.drawable.sc2logo);
+													break;
+												case 7:  //tf2
+													imageView.setImageResource(R.drawable.tf2logo);
+													break;
+												case 8:  //hots
+													imageView.setImageResource(R.drawable.hotslogo);
+													break;
+												case 9:  //lol
+													imageView.setImageResource(R.drawable.lollogo);
+													break;
+													
+													
 												
 												default: 
 													imageView.setImageResource(R.drawable.transgq);

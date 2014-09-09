@@ -71,8 +71,27 @@ public class ListAdapter extends ArrayAdapter<String> {
 				game = "Dota 2";
 				break;
 			case 3:
-				game = "CS:GO";
-				break;				
+				game = "Counter Strike: Global Offensive";
+				break;	
+			case 4:
+				game = "Smite";
+				break;
+			case 5:
+				game = "Strife";
+				break;	
+			case 6:
+				game = "StarCraft II";
+				break;	
+			case 7:
+				game = "Team Fortress 2";
+				break;	
+			case 8:
+				game = "Heroes of the Storm";
+				break;	
+			case 9:
+				game = "Hearthstone";
+				break;	
+				
 			default:
 				game = "unknown game";
 				break;
@@ -90,13 +109,17 @@ public class ListAdapter extends ArrayAdapter<String> {
 			imageView.setImageResource(R.drawable.green_light);
 			status = getContext().getResources().getString(R.string.status2) + " " + game;
 			break;
-		case 4:
+		case 3:
 			imageView.setImageResource(R.drawable.grey_light);
 			status = getContext().getResources().getString(R.string.status3);
+			break;		
+		case 4:
+			imageView.setImageResource(R.drawable.grey_light);
+			status = getContext().getResources().getString(R.string.status4);
 			break;				
 		default:
 			imageView.setImageResource(R.drawable.blue_light);
-			status = getContext().getResources().getString(R.string.status4);
+			status = getContext().getResources().getString(R.string.statusx);
 			break;
     }
 	    statusTextView.setText(status);
