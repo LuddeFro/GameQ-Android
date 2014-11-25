@@ -1,6 +1,17 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/device_list"
+    android:layout_width="match_parent"
+    android:id="@+id/container"
+    android:name="lvf.io.gameq.gameq_android.DeviceListFragment"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    
+    
+    <fragment 
     android:name="lvf.io.gameq.gameq_android.DeviceListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,3 +20,19 @@
     tools:context="com.example.gameq_android.DeviceListActivity"
     tools:layout="@android:layout/list_content" 
     android:background="#00222222"/>
+    <Button
+        android:id="@+id/storebutton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:background="@drawable/custom_buttons"
+        android:text="@string/str_get_more_games"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>

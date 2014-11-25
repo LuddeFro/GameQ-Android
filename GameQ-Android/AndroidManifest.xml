@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="lvf.io.gameq.gameq_android"
-    android:versionCode="3"
-    android:versionName="1.001" >
+    android:versionCode="7"
+    android:versionName="1.019" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <permission
         android:name="lvf.io.gameq.gameq_android.permission.C2D_MESSAGE"
@@ -25,13 +26,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <receiver
-            android:name="lvf.io.gameq.gameq_android.GcmBroadcastReceiver"
+            android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -40,22 +40,22 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="lvf.io.gameq.gameq_android.GcmIntentService" />
+        <service android:name=".GcmIntentService" />
 
         <activity
-            android:name="lvf.io.gameq.gameq_android.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="lvf.io.gameq.gameq_android.LoginActivity"
+            android:name=".LoginActivity"
             android:excludeFromRecents="true"
             android:label="@string/app_name"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="lvf.io.gameq.gameq_android.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/app_name"
-            android:parentActivityName="lvf.io.gameq.gameq_android.SwipeActivity" >
+            android:parentActivityName=".SwipeActivity" >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -63,35 +63,39 @@
                 android:value="lvf.io.gameq.gameq_android.MainActivity" />
         </activity>
         <activity
-            android:name="lvf.io.gameq.gameq_android.AboutActivity"
+            android:name=".AboutActivity"
             android:label="@string/app_name"
-            android:parentActivityName="lvf.io.gameq.gameq_android.SwipeActivity" >
+            android:parentActivityName=".SwipeActivity" >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lvf.io.gameq.gameq_android.MainActivity" />
         </activity>
-        
         <activity
-            android:name="lvf.io.gameq.gameq_android.DeviceDetailActivity"
+            android:name=".DeviceDetailActivity"
             android:label="@string/app_name"
-            android:parentActivityName="lvf.io.gameq.gameq_android.SwipeActivity" >
+            android:parentActivityName=".SwipeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lvf.io.gameq.gameq_android.SwipeActivity" />
         </activity>
         <activity
-            android:name="lvf.io.gameq.gameq_android.SwipeActivity"
+            android:name=".SwipeActivity"
             android:label="@string/title_activity_swipe" >
             
+        </activity>
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
     </application>
 
 </manifest>

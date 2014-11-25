@@ -1,24 +1,19 @@
 package lvf.io.gameq.gameq_android;
 
-import lvf.io.gameq.gameq_android.R;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.os.Build;
+import android.widget.Switch;
 
 public class AboutActivity extends ActivityMaster {
 
@@ -45,6 +40,14 @@ public class AboutActivity extends ActivityMaster {
 		Button twitterButton = (Button) this.findViewById(R.id.btnTwitter);
 		Button facebookButton = (Button) this.findViewById(R.id.btnFacebook);
 		Button websiteButton = (Button) this.findViewById(R.id.button1);
+		Button storeButton = (Button) this.findViewById(R.id.button2);
+		
+		storeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	showStore(v, false);
+            }
+		});
+		
 		twitterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.str_twitter)));
@@ -54,7 +57,7 @@ public class AboutActivity extends ActivityMaster {
 		
 		facebookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.str_facebook)));
+            	Intent browserIntent = getOpenFacebookIntent(getBaseContext());
         		startActivity(browserIntent);
             }
 		});
@@ -67,6 +70,16 @@ public class AboutActivity extends ActivityMaster {
 		});
 		
 		notSwitch.setOnCheckedChangeListener(listenerNots);
+	}
+	
+	public static Intent getOpenFacebookIntent(Context context) {
+
+		   try {
+		    context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+		    return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/304122193079686"));
+		   } catch (Exception e) {
+		    return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/GameQApp"));
+		   }
 	}
 
 	@Override

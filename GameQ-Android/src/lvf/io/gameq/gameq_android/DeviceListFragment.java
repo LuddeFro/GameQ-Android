@@ -3,7 +3,6 @@ package lvf.io.gameq.gameq_android;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import lvf.io.gameq.gameq_android.dummy.DummyContent;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -258,12 +257,15 @@ public class DeviceListFragment extends ListFragment {
 			} else {
 				arrayString = listString.split(":");				
 			}
-			getActivity().runOnUiThread(new Runnable() {
-			    public void run() {
-			    	setListAdapter(new ListAdapter(getActivity(), arrayString));
-					((BaseAdapter)getListAdapter()).notifyDataSetChanged();
-			    }
-			});
+			//TODO got null pointer exception once on the line below
+			if (getActivity() != null) {
+				getActivity().runOnUiThread(new Runnable() {
+				    public void run() {
+				    	setListAdapter(new ListAdapter(getActivity(), arrayString));
+						((BaseAdapter)getListAdapter()).notifyDataSetChanged();
+				    }
+				});
+			}
 			
 			return true;
 		}

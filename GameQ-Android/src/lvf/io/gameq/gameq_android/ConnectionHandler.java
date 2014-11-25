@@ -9,9 +9,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.EmptyStackException;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ConnectionHandler {
 	private boolean disconnected;
@@ -25,6 +28,8 @@ public class ConnectionHandler {
 	private static final String str_UpdateTokenURL = "upAndroidToken.php";
 	private static final String str_RegisterURL = "regging.php";
 	private static final String str_VersionURL = "versionControl.php";
+	private static final String str_getMyGamesURL = "getMyGames.php";
+	private static final String str_upMyGamesURL = "upMyGames.php";
 	private static final String str_URL = "http://54.76.41.235/GameQ_Server_Code/";
 	private static final String kVERSION = "1.0";
 	private boolean master;
@@ -81,10 +86,10 @@ public class ConnectionHandler {
 	}
 	/**
 	 * constructor for deviceListFragment
-	 */
+	 *//*
 	public ConnectionHandler() {
 		disconnected = false;
-	}
+	}*/
 	
 	public void postLogout() {
 		String token;
@@ -108,24 +113,39 @@ public class ConnectionHandler {
 	}
 	
 	
-	/**
-	 * 
-	 * @param email
-	 * @param password
-	 * @return
-	 * returns one of the strings alt0, alt1 as defined in values/strings
-	 * alt0 -> refused login
-	 * alt1 -> login accepted
-	 * 
-	 */
 	public String postLogin(String email, String password) {
 		if (email == null || password == null) {
 			return alt0;
 		}
-		
-		password = Encryptor.hashSHA256(password);
-		String urlParameters = "email=" + email + "&losenord=" + password;
+		String losenord = Encryptor.hashSHA256(password);
+		String urlParameters = "email=" + email + "&losenord=" + losenord;
 		String urlPath = str_LoginURL;
+		return post(urlParameters, urlPath);
+	}
+	
+	public String postGetMyGames(String email) {
+		if (email == null) {
+			return alt0;
+		}
+		
+		String urlParameters = "email=" + email;
+		String urlPath = str_getMyGamesURL;
+		return post(urlParameters, urlPath);
+	}
+	
+	public String postUpMyGames(String email, String newGames) {
+		if (email == null || newGames == null) {
+			return alt0;
+		}
+		String vCode = "";
+		if (master) {
+			vCode = ActivityMaster.lastGames[1] + masterActivity.getEmail().toLowerCase() + ActivityMaster.lastGames[0];
+		} else { 
+			vCode = ActivityMaster.lastGames[1] + parentActivity.getEmail().toLowerCase() + ActivityMaster.lastGames[0];
+		}
+		vCode = Encryptor.hashSHA256(vCode);
+		String urlParameters = "email=" + email + "&games=" + newGames + "&vCode=" + vCode;
+		String urlPath = str_upMyGamesURL;
 		return post(urlParameters, urlPath);
 	}
 	
@@ -175,6 +195,7 @@ public class ConnectionHandler {
 	
 	public String postRegister(String email, String firstname, String lastname, int gender, int yob, String country, String losenord, String secretq, String secret) {
 		losenord = Encryptor.hashSHA256(losenord);
+		secret = Encryptor.hashSHA256(secret);
 		String urlParameters = "email=" + email + "&firstname=" + firstname + "&lastname=" + lastname + "&gender=" + gender + "&yob=" + yob + "&country=" + country + "&losenord=" + losenord + "&secretq=" + secretq + "&secret=" + secret;
 		String urlPath = str_RegisterURL;
 		return post(urlParameters, urlPath);
@@ -308,6 +329,79 @@ public class ConnectionHandler {
 	            }
 	        }
 	    }  
+		
+		if (response.length() >= 7) {
+			if (response.substring(0, 7).equals("mygames")) {
+				response = response.substring(7);
+				String[] subStrings = response.split(";");
+				ActivityMaster.lastGames = subStrings;
+				if (subStrings[0].equals("0")) {
+					
+					if (master) {
+						masterActivity.runOnUiThread(new Runnable() {
+						    public void run() {
+						    	((ActivityMaster) masterActivity).showStore(null, true);
+						    }
+						});
+					} else { 
+						parentActivity.runOnUiThread(new Runnable() {
+						    public void run() {
+						    	((ActivityMaster) parentActivity).showStore(null, true);
+						    }
+						});
+					}
+					
+					
+					
+					
+				} else {
+					ActivityMaster.menuEnabled = true;
+					if (parentActivity != null) {
+						parentActivity.invalidateOptionsMenu();
+						((ActivityMaster) parentActivity).updateStore();
+					} else if (masterActivity != null ){
+						masterActivity.invalidateOptionsMenu();
+						masterActivity.updateStore();
+					}
+					
+				}
+				
+			}
+		}
+		
+		if(response.equals("gamesUp")) {
+			if (ActivityMaster.isPurchasing) {
+				if (parentActivity != null) {
+					parentActivity.connectionsHandler.postGetMyGames(parentActivity.getEmail());
+				} else if (masterActivity != null ){
+					masterActivity.connectionsHandler.postGetMyGames(parentActivity.getEmail());
+				}
+				
+			} else {
+				if (parentActivity != null) {
+					parentActivity.hideStore();
+					ActivityMaster.menuEnabled = true;
+					parentActivity.invalidateOptionsMenu();
+				} else if (masterActivity != null ){
+					masterActivity.hideStore();
+					ActivityMaster.menuEnabled = true;
+					masterActivity.invalidateOptionsMenu();
+				}
+				
+			}
+		}
+	    if(response.equals("upGameFail")) {
+	    	return alt0;
+	    }
+	    if(response.equals("piracy")) {
+	    	this.alert("Something went wrong, contact GameQ support at: support@gameq.io");
+	    }
+	    
+	    
+	    
+	    
+		
+		
 		
 		if (response.equals("postedDevice")) {
 	        return alt1;

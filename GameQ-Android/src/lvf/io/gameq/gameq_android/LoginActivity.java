@@ -2,7 +2,6 @@ package lvf.io.gameq.gameq_android;
 
 import java.io.IOException;
 
-import lvf.io.gameq.gameq_android.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.animation.Animator;
@@ -507,7 +506,7 @@ public class LoginActivity extends ActivityMaster{
 			if (success) {
 				Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
 				intent.putExtra(getResources().getString(R.string.str_fromLogin), "yes");
-				setEmail(mEmail);
+				setEmail(mEmail.toLowerCase());
 				Log.i(TAG, "setting email:" + mEmail);
 				setPassword(mPassword);
 				Log.i(TAG, "setting password:" + mPassword);
@@ -515,6 +514,7 @@ public class LoginActivity extends ActivityMaster{
 				Log.i(TAG, "setting email: true");
 				startActivity(intent);
 				String token = getToken();
+				setBolIsRegisteredForNotifications(true);
 				if (token != null) {
 					
 					new AsyncTask<Void, Void, String>() {
@@ -566,7 +566,7 @@ public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 		
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			String loginString = connectionsHandler.postRegister(mEmail, "", "", 1, 0, "", mPassword, mQuestion, mAnswer);
+			String loginString = connectionsHandler.postRegister(mEmail.toLowerCase(), "", "", 1, 0, "", mPassword, mQuestion, mAnswer);
 			mDuplicate = false;
 			if (loginString == null) {
 				cancel(false);
@@ -602,6 +602,7 @@ public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 					    .setTitle("GameQ")
 					    .setMessage(getString(R.string.welcome))
 					    .setCancelable(false)
+					    .setIcon(R.drawable.ic_stat_gcm)
 					    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					        public void onClick(DialogInterface dialog, int which) { 
 					            dialog.cancel();

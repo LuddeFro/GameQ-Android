@@ -1,6 +1,6 @@
 package lvf.io.gameq.gameq_android;
 
-import lvf.io.gameq.gameq_android.R;
+
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -141,14 +141,14 @@ public class GcmIntentService extends IntentService {
 	        
 	        
 	        
-	        
-	        Intent myIntent = new Intent(getBaseContext().getApplicationContext(), DeviceListActivity.class);
+	        /* tror att foljande kod forsoker oppna appen nar man far notification, vet inte om det funkar
+	        Intent myIntent = new Intent(getBaseContext().getApplicationContext(), SwipeActivity.class);
 	        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	        Bundle bundle = new Bundle();
 	        bundle.putString("message", msg);
 	        myIntent.putExtras(bundle);
 	        getBaseContext().getApplicationContext().startActivity(myIntent);
-	        
+	        */
 		} 
     }
 }

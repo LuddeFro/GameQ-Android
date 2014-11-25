@@ -24,35 +24,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-light"
             android:text="@string/login_progress_signing_in"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
     </LinearLayout>
 
     <!-- Login form -->
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/blurred" />
+
         <RelativeLayout
             android:id="@+id/login_form"
             style="@style/LoginFormContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#222222"
+            android:background="#22222200"
             android:orientation="vertical" >
-            
+
             <Button
                 android:id="@+id/sign_in_button"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_above="@+id/btnBot"
                 android:layout_alignLeft="@+id/txtAnswer"
                 android:layout_alignRight="@+id/txtAnswer"
-                android:layout_marginBottom="3dp"
-                android:background="@drawable/custom_buttons"
+                android:layout_marginBottom="10dp"
+                android:background="#ffffff"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:text="@string/sign_in_button"
-                android:textColor="#ffffff" />
+                android:textColor="#e74c3c" />
 
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:ems="10"
+                android:hint="@string/prompt_email"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#ffffffff"
+                android:textColorHint="#ffffffff" />
+            
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
@@ -63,14 +86,12 @@
                 android:hint="@string/prompt_password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="#ffffff">
-
-                <requestFocus />
-            </EditText>
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffffff" />
 
             <EditText
                 android:id="@+id/txtQuestion"
@@ -82,25 +103,15 @@
                 android:layout_marginTop="30dp"
                 android:ems="10"
                 android:hint="@string/prompt_question"
+                android:imeOptions="actionDone"
                 android:maxEms="10"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:typeface="normal" 
-                android:textColor="#ffffffff"/>
+                android:textColor="#ffffffff"
+                android:textColorHint="#ffffffff"
+                android:typeface="normal" />
 
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="80dp"
-                android:ems="10"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" 
-                android:textColor="#ffffffff" />
+            
 
             <EditText
                 android:id="@+id/txtAnswer"
@@ -111,18 +122,20 @@
                 android:layout_below="@+id/txtQuestion"
                 android:ems="10"
                 android:hint="@string/prompt_answer"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
                 android:maxEms="10"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:typeface="normal" 
-                android:inputType="textPassword"
-                android:textColor="#ffffffff"/>
+                android:textColor="#ffffffff"
+                android:textColorHint="#ffffffff"
+                android:typeface="normal" />
 
             <Button
                 android:id="@+id/btnBot"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_alignLeft="@+id/sign_in_button"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/sign_in_button"

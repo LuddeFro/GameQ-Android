@@ -1,7 +1,5 @@
 package lvf.io.gameq.gameq_android;
 
-import lvf.io.gameq.gameq_android.R;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;

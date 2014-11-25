@@ -3,7 +3,6 @@ package lvf.io.gameq.gameq_android;
 import java.io.IOException;
 import java.security.MessageDigest;
 
-import lvf.io.gameq.gameq_android.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.content.Context;

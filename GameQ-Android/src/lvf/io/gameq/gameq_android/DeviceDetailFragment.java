@@ -1,16 +1,15 @@
 package lvf.io.gameq.gameq_android;
 
-import lvf.io.gameq.gameq_android.dummy.DummyContent;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import lvf.io.gameq.gameq_android.R;
 
 /**
  * A fragment representing a single Device detail screen. This fragment is

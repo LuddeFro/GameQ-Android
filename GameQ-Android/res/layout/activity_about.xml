@@ -24,18 +24,20 @@
         android:layout_alignRight="@+id/gameTextView1"
         android:layout_marginBottom="20dp"
         android:background="@drawable/custom_buttons"
-        android:text="@string/str_gameq.com" 
+        android:text="@string/str_gameq.com"
         android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/gameTextView1"
         android:layout_width="288dp"
         android:layout_height="359dp"
+        android:layout_above="@+id/button2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="@string/str_about_text"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/textView1Settings"
@@ -84,5 +86,18 @@
         android:layout_alignLeft="@+id/lblLikeUs"
         android:layout_marginLeft="32dp"
         android:background="@drawable/fb" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1Settings"
+        android:layout_alignLeft="@+id/gameTextView1"
+        android:layout_alignRight="@+id/gameTextView1"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_buttons"
+        android:text="@string/str_get_more_games"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

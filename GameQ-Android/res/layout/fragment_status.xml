@@ -15,7 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/gameTextView1"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/transgq" 
         android:contentDescription="@string/gameQLogoDescription" />
 
@@ -49,10 +50,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="31dp"
+        android:background="#00FFFFFF"
         android:gravity="center_horizontal"
         android:lines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:background="#60FFFFFF" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/statusTextView1"
@@ -62,9 +63,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="17dp"
+        android:background="#60FFFFFF"
         android:gravity="center_horizontal"
         android:lines="1"
-        android:background="#60FFFFFF"
+        android:text="@string/status_disconnected"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

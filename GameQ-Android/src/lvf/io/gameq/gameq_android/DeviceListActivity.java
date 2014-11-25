@@ -64,7 +64,7 @@ public class DeviceListActivity extends Fragment implements
     String regid;
     //Project Number from GameQ @ https://console.developers.google.com/project/
     //project GameQ by GameQ, only accessible for GameQ under "projects"
-    String SENDER_ID = "647277380052";
+    String SENDER_ID = "773141536608";
 	
     public void initiation() {
     	if (connectionsHandler == null) {

@@ -11,7 +11,7 @@ import java.util.TimerTask;
 import javax.xml.datatype.DatatypeConstants.Field;
 
 import lvf.io.gameq.gameq_android.StatFrag.OnFragmentInteractionListener;
-import lvf.io.gameq.gameq_android.dummy.DummyContent;
+import lvf.io.gameq.gameq_android.DummyContent;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,7 +38,9 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,13 +80,15 @@ public class SwipeActivity extends ActivityMaster {
     public ConnectionHandler connectionsHandler;
     //Project Number from GameQ @ https://console.developers.google.com/project/
     //project GameQ by GameQ, only accessible for GameQ under "projects"
-    String SENDER_ID = "647277380052";
+    
 	
     
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		menuEnabled = false;
+		invalidateOptionsMenu();
 		try {
 	        ViewConfiguration config = ViewConfiguration.get(this);
 	        java.lang.reflect.Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
@@ -116,7 +120,7 @@ public class SwipeActivity extends ActivityMaster {
 		if (fromLogin == null) {
 			
 			boolean bolIsLoggedIn = getBolIsLoggedIn();
-			String email = getEmail();
+			final String email = getEmail();
 			String password = getPassword();
 			
 			if (password == null || email == null || bolIsLoggedIn == false) { 
@@ -125,10 +129,38 @@ public class SwipeActivity extends ActivityMaster {
 			} else { // creds valid?! attemptlogin with email + password
 				//showLogin(email, password);
 				//assume login
+				new AsyncTask<Void, Void, String>() {
+			        @Override
+			        protected String doInBackground(Void... params) {
+			            String msg = "";
+			            connectionsHandler.postGetMyGames(email);
+			            return msg;
+			        }
+
+			        @Override
+			        protected void onPostExecute(String msg) {
+			            
+			        }
+			    }.execute(null, null, null);
+				
 			}
+		} else {
+			new AsyncTask<Void, Void, String>() {
+		        @Override
+		        protected String doInBackground(Void... params) {
+		            String msg = "";
+		            connectionsHandler.postGetMyGames(getEmail());
+		            return msg;
+		        }
+
+		        @Override
+		        protected void onPostExecute(String msg) {
+		            
+		        }
+		    }.execute(null, null, null);
 		}
 		AppRater.app_launched(this);
-
+		
 	}
 	
 	
@@ -193,6 +225,9 @@ public class SwipeActivity extends ActivityMaster {
 				return sf;
 			} else if (position == 1) {
 				lf = DeviceListActivity.newInstance(position + 1);
+				
+				System.out.println("showing list?!?!?");
+				
 				return lf;
 			} else {
 				lf = DeviceListActivity.newInstance(position + 1);
@@ -243,6 +278,8 @@ public class SwipeActivity extends ActivityMaster {
 		private final Fragment thisActivity = this;
 		private static final String ARG_PARAM1 = "param1";
 		protected Dialog dialog;
+		public static DeviceListActivity fragment;
+		public static Activity parAct;
 		GoogleCloudMessaging gcm;
 		String regid;
 		//Project Number from GameQ @ https://console.developers.google.com/project/
@@ -251,11 +288,14 @@ public class SwipeActivity extends ActivityMaster {
 
 		
 		public static DeviceListActivity newInstance(int i) {
-			DeviceListActivity fragment = new DeviceListActivity();
+			
+			fragment = new DeviceListActivity();
 			Bundle args = new Bundle();
 			args.putInt(ARG_PARAM1, i);
 			fragment.setArguments(args);
 			fragment.initiation();
+			parAct = fragment.getActivity();
+			
 			return fragment;
 		}
 		
@@ -293,7 +333,8 @@ public class SwipeActivity extends ActivityMaster {
 						R.id.device_list)).setActivateOnItemClick(true);
 						*//*
 			}*/ mTwoPane = false;
-
+			
+			
 			return inflater.inflate(R.layout.activity_device_list, container, false);
 		}
 
@@ -466,6 +507,13 @@ public class SwipeActivity extends ActivityMaster {
 		    	//alert("@string/out_of_date_Google_Services_APK");
 		    	
 		    //}
+			Button btn = (Button) ((fragment.getView().findViewById(R.id.container)).findViewById(R.id.storebutton));
+			btn.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	            	
+	            	((SwipeActivity) fragment.getActivity()).showStore(v, false);
+	            }
+			});
 		    if (!checkPlayServices()) {
 				Log.i(TAG, "!checkPlayServices() returns true in onCreate() Activity Master");
 		    	//Log.i(TAG, "@string/out_of_date_Google_Services_APK");
@@ -724,7 +772,7 @@ public class SwipeActivity extends ActivityMaster {
 	//-------------------------------------------------------------------------------------------
 	//-------------------------------StatusFragmentSection----------------------------------------------
 	
-	@SuppressLint("ValidFragment")
+	
 	public class StatusFragment extends Fragment {
 		// TODO: Rename parameter arguments, choose names that match
 		// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -849,14 +897,14 @@ public class SwipeActivity extends ActivityMaster {
 			    	 int innerStatus = DummyContent.status;
 			    	 long innerqTime = DummyContent.qTime;
 			    	 int newImage = innerGame;
+			    	 gameTextView.setAlpha(0.375f);
 			    	 switch (innerGame) {
 						case 0: //none
-							
+							gameTextView.setAlpha(0);
 							Log.i(TAG, "0");
 							break;
 						case 1: //HoN
 							gameTextView.setText("Heroes of Newerth");
-							
 							Log.i(TAG, "1");
 							break;
 						
@@ -901,6 +949,8 @@ public class SwipeActivity extends ActivityMaster {
 						case 0: //offline
 							statusTextView.setText(getResources().getString(R.string.status_offline));
 							approxTextView.setText("");
+							gameTextView.setText("");
+							gameTextView.setAlpha(0);
 							timeTextView.setText("");
 							newImage = 0;
 							
@@ -924,6 +974,8 @@ public class SwipeActivity extends ActivityMaster {
 						case 3:  //not tracking
 							statusTextView.setText(getResources().getString(R.string.status_nottracking));
 							approxTextView.setText("");
+							gameTextView.setText("");
+							gameTextView.setAlpha(0);
 							timeTextView.setText("");
 							newImage = 0;
 							Log.i(TAG, "disced");
@@ -932,6 +984,8 @@ public class SwipeActivity extends ActivityMaster {
 						case 4:  //disconnected
 							statusTextView.setText(getResources().getString(R.string.status_disconnected));
 							approxTextView.setText("");
+							gameTextView.setText("");
+							gameTextView.setAlpha(0);
 							timeTextView.setText("");
 							newImage = 0;
 							Log.i(TAG, "disced");

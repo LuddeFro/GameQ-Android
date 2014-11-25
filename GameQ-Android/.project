@@ -3,6 +3,8 @@
 	<name>GameQ-Android</name>
 	<comment></comment>
 	<projects>
+		<project>appcompat_v7</project>
+		<project>google-play-services_lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
